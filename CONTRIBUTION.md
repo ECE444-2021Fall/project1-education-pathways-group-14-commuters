@@ -20,8 +20,6 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 5. Make sure your code lints.
 6. Issue that pull request!
 
-## Any contributions you make will be under the ?????? Software License
-
 
 ## Report bugs using Github's [issues](https://github.com/ECE444-2021Fall/project1-education-pathways-group-14-commuters/issues)
 We use GitHub issues to track public bugs. Report a bug by [opening a new issue](); it's that easy!
@@ -42,9 +40,5 @@ People *love* thorough bug reports. I'm not even kidding.
 
 ## Use a Consistent Coding Style
 
-
-## License
-By contributing, you agree that your contributions will be licensed under its ????????? License.
-
 ## References
-This document was adapted from the open-source contribution guidelines for [Facebook's Draft](https://githu
+This document was adapted from the open-source contribution guidelines for [Facebook's Draft](https://github.com/facebook/draft-js/blob/a9316a723f9e918afde44dea68b5f9f39b7d9b00/CONTRIBUTING.md)
