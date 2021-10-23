@@ -66,7 +66,7 @@ def create_app():
         if search.data['search'] == '' or not search.data['search']:
             return redirect('/')
         results = filter_courses(
-            search.data['search'],
+            search.data['search'].lower(),
             search.data['select'],
             search.data['divisions'],
             search.data['departments'],
