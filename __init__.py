@@ -7,20 +7,27 @@ from collections import defaultdict
 from scipy.sparse import load_npz
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, render_template, request, redirect
-from wtforms import Form, StringField, SelectField
+from wtforms import Form, StringField, SelectField, SelectMultipleField
+from wtforms.widgets import ListWidget, CheckboxInput
+from wtforms.widgets.core import Select, TableWidget
+
+class MultiCheckboxField(SelectMultipleField):
+    #widget = ListWidget(prefix_label=False)
+    widget = TableWidget(with_table_tag=False)
+    option_widget = CheckboxInput()
 
 """Build the search form, including dropdown menus at the top of the page, from the main datafile."""
 class CourseSearchForm(Form):
     df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
-    divisions = [('Any','Any')] + sorted([
+    divisions = [('Any','---Division---')] + sorted([
         (t,t) for t in set(df.Division.values)
     ])
 
-    departments = [('Any','Any')] + sorted([
+    departments = [('Any','---Department---')] + sorted([
         (t,t) for t in set(df.Department.values)
     ])
 
-    campus = [('Any','Any')] + sorted([
+    campus = [('Any','---Campus---')] + sorted([
         (t,t) for t in set(df.Campus.values)
     ])
 
@@ -33,12 +40,12 @@ class CourseSearchForm(Form):
         ('25','25'),
         ('50','50')
     ]
-    select = SelectField('Course Year:', choices=year_choices)
+    select = MultiCheckboxField('Course Year:', choices=year_choices)
     top = SelectField('',choices=top)
-    divisions = SelectField('Division:', choices=divisions)
-    departments = SelectField('Department:', choices=departments)
-    campuses = SelectField('Campus:', choices=campus)
-    search = StringField('Search Terms:')
+    divisions = SelectField('', choices=divisions)
+    departments = SelectField('', choices=departments)
+    campuses = SelectField('', choices=campus)
+    search = StringField('', render_kw={"placeholder": "Search Terms"})
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -63,11 +70,12 @@ def create_app():
     """
     @app.route('/results')
     def search_results(search):
+        print(search.data['select'][0])
         if search.data['search'] == '' or not search.data['search']:
             return redirect('/')
         results = filter_courses(
             search.data['search'].lower(),
-            search.data['select'],
+            search.data['select'][0],
             search.data['divisions'],
             search.data['departments'],
             search.data['campuses'],

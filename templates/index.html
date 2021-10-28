@@ -14,13 +14,15 @@
 {% from "_formhelpers.html" import render_field %}
 <form method="post">
   <dl>
-    {{ render_field(form.select) }}
+    <div style="display: inline;">
     <p>
-        Restrict by one of: {{ render_field(form.divisions) }} or {{ render_field(form.departments) }} or {{ render_field(form.campuses) }}
+      {{ render_field(form.search, size=100) }} <input type="submit" value="Search"> {{render_field(form.top)}} 
     </p> 
     <p>
-    {{ render_field(form.search) }}
-  </p></dl>
-  <p>{{render_field(form.top)}} <input type="submit" value="Search">
-</p></form>
+      Filters: {{ render_field(form.divisions) }}  {{ render_field(form.departments) }}  {{ render_field(form.campuses) }}
+    </p> 
+    {{ render_field(form.select) }}
+    </div>
+  </dl>
+</form>
 </doctype>
