@@ -81,13 +81,19 @@ def create_search_filter(dictionary):
                 except IndexError: # if $or for the current key doesn't exist, append a new one
                     searchFilter["$and"].append({"$or": [{key: value_int}]})
 
+            elif key == 'FASEAvailable' or key == 'MaybeRestricted':
+                value_bool = value.lower() in ("true")
+                try: # see if $or for the current key exists in the filter
+                    searchFilter["$and"][i]["$or"].append({key: value_bool}) 
+                except IndexError: # if $or for the current key doesn't exist, append a new one
+                    searchFilter["$and"].append({"$or": [{key: value_bool}]})
+
             else:
                 try: # see if $or for the current key exists in the filter
                     searchFilter["$and"][i]["$or"].append({key: value}) 
                 except IndexError: # if $or for the current key doesn't exist, append a new one
                     searchFilter["$and"].append({"$or": [{key: value}]})
             
-            #TODO: handle course level which has values of int
 
         i=i+1
     return searchFilter
