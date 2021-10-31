@@ -74,6 +74,13 @@ def create_search_filter(dictionary):
                 except IndexError: # if $or for the current key doesn't exist, append a new one
                     searchFilter["$and"].append({"$or": [{'Name': content}, {'Code': content}]})
             
+            elif key == 'Course Level':
+                value_int = int(value)
+                try: # see if $or for the current key exists in the filter
+                    searchFilter["$and"][i]["$or"].append({key: value_int}) 
+                except IndexError: # if $or for the current key doesn't exist, append a new one
+                    searchFilter["$and"].append({"$or": [{key: value_int}]})
+
             else:
                 try: # see if $or for the current key exists in the filter
                     searchFilter["$and"][i]["$or"].append({key: value}) 

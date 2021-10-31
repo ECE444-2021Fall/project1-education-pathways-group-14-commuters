@@ -56,7 +56,7 @@ class Test_Create_Search_Filter(unittest.TestCase):
             ]}
         self.assertDictEqual(actual, expected)  
 
-    def test_create_filter3(self): # added category 'keyword'
+    def test_create_filter_with_keyword1(self): # added category 'keyword'
         dictionary = {'keyword': ['software'], 'Department': ['Computer Science', 'Edward S. Rogers Sr. Dept. of Electrical & Computer Engin.']}
         actual = create_search_filter(dictionary)
         expected = {'$and':[
@@ -71,7 +71,7 @@ class Test_Create_Search_Filter(unittest.TestCase):
             ]}
         self.assertDictEqual(actual, expected)  
 
-    def test_create_filter4(self): # more than one filter for 'keyword'
+    def test_create_filter_with_keyword2(self): # more than one filter for 'keyword'
         dictionary = {'keyword': ['software', 'intro'], 'Department': ['Computer Science', 'Edward S. Rogers Sr. Dept. of Electrical & Computer Engin.']}
         actual = create_search_filter(dictionary)
         expected = {'$and':[
@@ -88,7 +88,7 @@ class Test_Create_Search_Filter(unittest.TestCase):
             ]}
         self.assertDictEqual(actual, expected)  
     
-    def test_create_filter5(self): # many filters
+    def test_create_filter_many(self): # many filters
         dictionary = {
             'keyword': ['ece', 'Intro'], 
             'Department': ['Computer Science', 'Edward S. Rogers Sr. Dept. of Electrical & Computer Engin.'],
@@ -116,3 +116,33 @@ class Test_Create_Search_Filter(unittest.TestCase):
                 ]}
         ]}
         self.assertDictEqual(actual, expected)  
+
+    def test_create_filter_with_courselevel1(self): # added 'Course Level'
+            dictionary = {'Course Level': [1], 'Department': ['Computer Science', 'Edward S. Rogers Sr. Dept. of Electrical & Computer Engin.']}
+            actual = create_search_filter(dictionary)
+            expected = {'$and':[
+                    {'$or': [
+                       {'Course Level': 1},
+                    ]},
+                    {'$or': [
+                        {'Department': "Computer Science"},
+                        {'Department': "Edward S. Rogers Sr. Dept. of Electrical & Computer Engin."},
+                    ]},
+                ]}
+            self.assertDictEqual(actual, expected)  
+
+    def test_create_filter_with_courselevel2(self): # added 'Course Level'
+            dictionary = {'Course Level': [1, 2, 3], 'Department': ['Computer Science', 'Edward S. Rogers Sr. Dept. of Electrical & Computer Engin.']}
+            actual = create_search_filter(dictionary)
+            expected = {'$and':[
+                    {'$or': [
+                       {'Course Level': 1},
+                       {'Course Level': 2},
+                       {'Course Level': 3},
+                    ]},
+                    {'$or': [
+                        {'Department': "Computer Science"},
+                        {'Department': "Edward S. Rogers Sr. Dept. of Electrical & Computer Engin."},
+                    ]},
+                ]}
+            self.assertDictEqual(actual, expected)  
