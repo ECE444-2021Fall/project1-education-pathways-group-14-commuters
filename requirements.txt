@@ -54,3 +54,5 @@ wtforms==2.3.3
 # xz==5.2.5
 zipp==3.5.0
 # zlib==1.2.11
+Flask==1.1.2
+Flask_PyMongo==2.3.0
