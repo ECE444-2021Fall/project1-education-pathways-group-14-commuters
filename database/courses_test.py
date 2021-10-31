@@ -1,31 +1,8 @@
 import pytest
 import unittest
-import mock
 from .courses import *
-from .db import app
 from werkzeug.datastructures import ImmutableMultiDict
-import mongomock
 
-# # with app.test_client() as client:
-# # with app.test_client() as client:
-# #         with app.app_context():
-# #             from .courses import courses_bp
-# #             app.register_blueprint(courses_bp)
-# #             app.config["TESTING"] = True
-# #         yield app.test_client()
-# @pytest.fixture
-# def client():
-#     app.config["TESTING"] = True
-#     yield app.test_client()
-
-# class Test_Get_Result(unittest.TestCase):
-#     def test_get_courses_with_params(self):
-#         searchFilter = {}
-#         with app.test_client() as client:
-#             response = client.get('/api/course/search')
-#             assert response.status_code == 200
-        
-        
 class Test_Map_Query_Params(unittest.TestCase):
     def test_map_query_params_empty(self):
         actual = map_query_params(ImmutableMultiDict([]))
@@ -48,6 +25,62 @@ class Test_Map_Query_Params(unittest.TestCase):
         ]))
         expected = {'keyword': ['software'], 'Department': ['Computer Science', 'Edward S. Rogers Sr. Dept. of Electrical & Computer Engin.']}
         self.assertDictEqual(actual, expected)
+
+class Test_Get_Original_Value(unittest.TestCase):
+    def test_get_original_value_campus(self):
+        actual = get_original_value('Campus', 'UTSG')
+        expected = 'St. George'
+        self.assertEqual(actual, expected)
+    
+    def test_get_original_value_division(self):
+        actual = get_original_value('Division', 'ArtSci')
+        expected = 'Faculty of Arts and Science'
+        self.assertEqual(actual, expected)
+    
+    def test_get_original_value_department1(self):
+        actual = get_original_value('Department', 'CMSSC')
+        expected = 'Dept. of Computer & Mathematical Sci (UTSC)'
+        self.assertEqual(actual, expected)
+    
+    def test_get_original_value_department2(self):
+        actual = get_original_value('Department', 'SMC')
+        expected = 'St. Michael\'s College' #special character
+        self.assertEqual(actual, expected)
+    
+    def test_get_original_value_utsc_breadth(self):
+        actual = get_original_value('UTSC Breadth', 'ns')
+        expected = 'Natural Sciences'
+        self.assertEqual(actual, expected)
+    
+    def test_get_original_value_apsc_electives(self):
+        actual = get_original_value('APSC Electives', 'cs')
+        expected = 'Complementary Studies'
+        self.assertEqual(actual, expected)
+
+    def test_get_original_value_utm_distribution(self):
+        actual = get_original_value('UTM Distribution', 'scihum')
+        expected = 'Science or Humanities'
+        self.assertEqual(actual, expected)
+    
+    def test_get_original_value_arts_and_science_breadth(self):
+        actual = get_original_value('Arts and Science Breadth', '1') # '1' is a string
+        expected = '(1) Creative and Cultural Representation'
+        self.assertEqual(actual, expected)
+
+    def test_get_original_value_arts_and_science_distribution(self):
+        actual = get_original_value('Arts and Science Distribution', 'sciss') # '1' is a string
+        expected = 'Science or Social Science'
+        self.assertEqual(actual, expected)
+
+    def test_get_original_value_no_converting1(self):
+        actual = get_original_value('Campus', 'gibberish')
+        expected = 'gibberish'
+        self.assertEqual(actual, expected)
+    
+    def test_get_original_value_no_converting2(self):
+        actual = get_original_value('Weird Key', 'ECE')
+        expected = 'ECE'
+        self.assertEqual(actual, expected)
 
 class Test_Create_Search_Filter(unittest.TestCase):
     maxDiff = None

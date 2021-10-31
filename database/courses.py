@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from flask import Blueprint
 from .db import courses
+from .acronyms import *
 
 courses_bp = Blueprint('courses_dp', __name__)
 
@@ -56,6 +57,28 @@ def get_courses_with_params():
 def map_query_params(args):
     return dict(args.lists())
 
+def get_original_value(key, value):
+    try:
+        if key == 'Campus':
+            return campus[value.lower()]
+        elif key == 'Division':
+            return division[value.lower()]
+        elif key == 'Department':
+            return department[value.lower()]
+        elif key == 'UTSC Breadth':
+            return utsc_breadth[value.lower()]
+        elif key == 'APSC Electives':
+            return apsc_electives[value.lower()]
+        elif key == 'UTM Distribution':
+            return utm_distribution[value.lower()]
+        elif key == 'Arts and Science Breadth':
+            return arts_and_science_breadth[value.lower()]
+        elif key == 'Arts and Science Distribution':
+            return arts_and_science_distribution[value.lower()]
+    except KeyError:
+        return value
+    return value
+
 # create search filter to be passed to mongodb
 def create_search_filter(dictionary):
     if not dictionary: # empty dictionary
@@ -73,7 +96,7 @@ def create_search_filter(dictionary):
                     searchFilter["$and"][i]["$or"].append({'Code': content}) # append a filter that checks whether the keyword appears in 'Code'
                 except IndexError: # if $or for the current key doesn't exist, append a new one
                     searchFilter["$and"].append({"$or": [{'Name': content}, {'Code': content}]})
-            
+
             elif key == 'Course Level':
                 value_int = int(value)
                 try: # see if $or for the current key exists in the filter
@@ -90,10 +113,9 @@ def create_search_filter(dictionary):
 
             else:
                 try: # see if $or for the current key exists in the filter
-                    searchFilter["$and"][i]["$or"].append({key: value}) 
+                    searchFilter["$and"][i]["$or"].append({key: get_original_value(key, value)}) 
                 except IndexError: # if $or for the current key doesn't exist, append a new one
-                    searchFilter["$and"].append({"$or": [{key: value}]})
-            
+                    searchFilter["$and"].append({"$or": [{key: get_original_value(key, value)}]})
 
         i=i+1
     return searchFilter
