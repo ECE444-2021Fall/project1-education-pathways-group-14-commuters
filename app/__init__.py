@@ -34,9 +34,3 @@ def create_app(*config_cls, **db_cls) -> Flask:
 
     
     return app
-
-
-app = create_app()
-
-if __name__=="__main__":
-    app.run(host='0.0.0.0')
