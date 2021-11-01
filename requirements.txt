@@ -55,3 +55,4 @@ wtforms==2.3.3
 zipp==3.5.0
 # zlib==1.2.11
 python-dotenv == 0.19.1
+pytest==6.1.1
