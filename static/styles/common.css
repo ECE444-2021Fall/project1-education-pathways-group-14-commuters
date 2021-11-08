@@ -75,3 +75,11 @@ input[name="select"]{
   color: #00204E;
 }
 
+.btn {
+	box-shadow: none !important;
+  border: none !important;
+}
+
+h4 {
+  text-align: center;
+}
