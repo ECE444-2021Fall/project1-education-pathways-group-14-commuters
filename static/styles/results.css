@@ -1,18 +1,15 @@
 #results-page-table-container {
   margin: 20px auto;
   overflow-y: scroll;
-  height:40vh;
+  height:45vh;
 }
 
 #results-page-table-container table {
   padding: 3px;
-  border-collapse: separate;
 }
 
 #results-page-table-container table td {
   padding: 3px;
-  border-left: 1px solid #00204E;
-  border-bottom: 1px solid #00204E;
 }
 
 #results-page-table-container table th {
@@ -22,13 +19,21 @@
   z-index: 10;
   background-color: #00204E;
   color: white;
-  border-left: 1px solid #00204E;
-  border-bottom: 1px solid #00204E;
+  border-collapse: separate;
 }
 
 #results-page-table-container table th:last-child,#results-page-table-container table td:last-child {
   border-right: 1px solid #00204E;
 }
+
+#results-page-table-container table th:first-child,#results-page-table-container table td:first-child {
+  border-left: 1px solid #00204E;
+}
+
+#results-page-table-container table tr:last-child {
+  border-bottom: 1px solid #00204E;
+}
+
 
 .nav-tabs .nav-item .nav-link {
   background-color: #DCDCDC;

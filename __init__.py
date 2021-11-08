@@ -87,7 +87,7 @@ def create_app():
         except:
             results = []
 
-        return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+        return render_template('results.html',tables=[t.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
 
     """
     This method shows the information about a single course.
