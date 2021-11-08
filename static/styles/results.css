@@ -1,10 +1,11 @@
 #results-page-table-container {
   margin: 20px auto;
+  overflow-y: scroll;
+  height:40vh;
 }
 
 #results-page-table-container table {
-  border-radius: 20px;
-  padding: 20px;
+  padding: 3px;
   border-collapse: separate;
 }
 
@@ -17,7 +18,7 @@
 #results-page-table-container table th {
   text-align: center;
   position: sticky;
-  top: 2px;
+  top: 0px;
   z-index: 10;
   background-color: #00204E;
   color: white;
@@ -27,4 +28,24 @@
 
 #results-page-table-container table th:last-child,#results-page-table-container table td:last-child {
   border-right: 1px solid #00204E;
+}
+
+.nav-tabs .nav-item .nav-link {
+  background-color: #DCDCDC;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

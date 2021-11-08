@@ -9,6 +9,7 @@
 <h1 style="text-align: center">Education Pathways</h1>
 
 <body>
+  <div class="coure-info">
     {% for k,v in course.items() %}
         <p>
             <b>{{k}}:</b> {{v | safe}}
@@ -103,5 +104,6 @@
           </tr>
         </tbody>
         </table>
+  </div>
 </body>
 </html>
