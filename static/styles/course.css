@@ -1,0 +1,144 @@
+#course-info {
+  width: 70vw;
+  margin: auto;
+  border-width: 1px;
+  border-radius: 4px;
+  border-style: solid;
+  border-color: #adb8c7;
+  padding: 10px;
+  background-color: #DCDCDC;
+}
+
+#course-info h3 {
+  text-align: center;
+}
+
+.course-page-sub-heading h2 {
+  text-align: center;
+}
+
+.course-labels {
+  text-align: center;
+}
+
+#activities-schedule-table-container {
+  text-align: center;
+  margin: 0px 10px;
+  overflow-x: scroll;
+}
+
+#activities-schedule-table-container table {
+  padding: 3px;
+}
+
+#activities-schedule-table-container table td {
+  padding: 3px;
+}
+
+#activities-schedule-table-container table th {
+  text-align: center;
+  top: 0px;
+  z-index: 10;
+  background-color: #00204E;
+  color: white;
+  border-collapse: separate;
+}
+
+#activities-schedule-table-container table th:last-child,#activities-schedule-table-container table td:last-child {
+  border-right: 1px solid #00204E;
+}
+
+#activities-schedule-table-container table th:first-child,#activities-schedule-table-container table td:first-child {
+  border-left: 1px solid #00204E;
+}
+
+#activities-schedule-table-container table tr:last-child {
+  border-bottom: 1px solid #00204E;
+}
+
+h4 {
+  text-align: left;
+}
+
+.tg {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0px auto;
+}
+
+.tg td {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  padding: 10px 5px;
+  word-break: normal;
+}
+
+.tg th {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  overflow: hidden;
+  padding: 10px 5px;
+  word-break: normal;
+}
+
+.tg .tg-if7n {
+  border-color: #38fff8;
+  text-align: center;
+  vertical-align: top
+}
+
+.tg .tg-dxqr {
+  border-color: inherit;
+  color: #fe0000;
+  text-align: center;
+  vertical-align: top
+}
+
+.tg .tg-c3ow {
+  border-color: inherit;
+  text-align: center;
+  vertical-align: top
+}
+
+.tg .tg-0pky {
+  border-color: inherit;
+  text-align: center;
+  vertical-align: top
+}
+
+.tg .tg-7btt {
+  border-color: inherit;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: top
+}
+
+.tg .tg-0lax {
+  border-color: #38fff8;
+  text-align: center;
+  vertical-align: top
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}

@@ -52,14 +52,17 @@ input[name="select"]{
 }
 
 .navbar {
-  background-color: #CFE6FF;
+  background-color: #CFE2FF;
   margin: 0;
 }
 
+.navbar h2 {
+  font-family: Georgia;
+}
+
 #logo {
-  max-width: 20vw;
-  max-height: 18vh;
-  
+  max-height: 15vh;
+  max-width: 25vw;
 }
 
 .app-title {

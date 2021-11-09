@@ -126,7 +126,7 @@ def create_app():
         mayberestricted = course['MaybeRestricted']
         terms = course['Term']
         activities = course['Activity']
-        course = {k:v for k,v in course.items() if k not in ['Course','Course Level Number','FASEAvailable','MaybeRestricted','URL','Pre-requisites','Exclusion','Corequisite','Recommended Preparation','AIPreReqs','MajorsOutcomes','MinorsOutcomes','Term','Activity'] and v==v}
+        course = {k:v for k,v in course.items() if k not in ['Course', 'Course Level Number','FASEAvailable','MaybeRestricted','URL','Pre-requisites','Exclusion','Corequisite','Recommended Preparation','AIPreReqs','MajorsOutcomes','MinorsOutcomes','Term','Activity'] and v==v}
         return render_template(
             'course.html',
             course=course,

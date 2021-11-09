@@ -12,14 +12,14 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" title="Home Page" href="/">
         <img src="/static/CARTE_logo_transparent_bg.png" alt="" class="img-fluid" id="logo">
       </a>
       <ul class="navbar-nav me-0 mt-2 mb-lg-0 me-auto">
         <li class="app-title">
-          <h3>PET</h3>
+          <h2>PET</h2>
         </li>
       </ul>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -30,7 +30,7 @@
         <ul class="navbar-nav me-0 mt-2 pl-3 pr-1 mb-lg-0 ms-auto">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">
-              <button type="button" class="btn btn-outline-secondary navbar-button">
+              <button type="button" class="btn btn-outline-dark navbar-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                   class="bi bi-house-fill" viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
@@ -45,7 +45,7 @@
           </li>
           <li>
             <a class="nav-link" title="Carte Page" href="https://carte.utoronto.ca/" target="_blank">
-              <button type="button" class="btn btn-outline-secondary navbar-button">
+              <button type="button" class="btn btn-outline-dark navbar-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                   class="bi bi-map-fill" viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
@@ -58,7 +58,7 @@
           </li>
           <li>
             <a class="nav-link" title="Search" href="/search">
-              <button type="button" class="btn btn-outline-secondary navbar-button">
+              <button type="button" class="btn btn-outline-dark navbar-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search"
                   viewBox="0 0 16 16">
                   <path
@@ -71,7 +71,7 @@
           </li>
           <li>
             <a class="nav-link" title="Plan" href="/plan">
-              <button type="button" class="btn btn-outline-secondary navbar-button">
+              <button type="button" class="btn btn-outline-dark navbar-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                   class="bi bi-pencil-fill" viewBox="0 0 16 16">
                   <path
@@ -84,7 +84,7 @@
           </li>
           <li>
             <a class="nav-link" title="email" href="mailto:alex.olson@utoronto.ca">
-              <button type="button" class="btn btn-outline-secondary navbar-button">
+              <button type="button" class="btn btn-outline-dark navbar-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                   class="bi bi-envelope-open-fill" viewBox="0 0 16 16">
                   <path
@@ -97,7 +97,7 @@
           </li>
           <li>
             <a class="nav-link" title="Login" href="/login">
-              <button type="button" class="btn btn-outline-secondary navbar-button">
+              <button type="button" class="btn btn-outline-dark navbar-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                   class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
@@ -123,7 +123,7 @@
   </nav>
   <div class="page-contents">
     <div class="common-page-heading-container">
-      <h1>Planning and Exploration Tool (PET)</h1>
+      <h1>Planning and Exploration Tool</h1>
     </div>
     <div id="home-page-introduction">
       <p>Welcome to Group 14's U of T Course Planning and Exploration Tool!</p>
@@ -131,14 +131,11 @@
       <p>Use the filters to narrow down results.</p>
     </div>
     <div id="search-section">
-      {% from "_formhelpers.html" import render_field %}
+
       <form method="post" class="common-page-form" role="form">
         <div class="form-group">
           <div class="input-group input-group-lg mb-1">
-            <span class="input-group-text" id="basic-addon1">
-              {{ form.search.label }}
-            </span>
-            {{ form.search(class_="form-control", placeholder="Search") }}
+            {{ form.search(class_="form-control", placeholder="Enter Search Term(s)") }}
             <button type="submit" class="btn btn-secondary" id="button-addon2">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search"
                 viewBox="0 0 16 16">
