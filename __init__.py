@@ -7,10 +7,11 @@ from collections import defaultdict
 from scipy.sparse import load_npz
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, render_template, request, redirect
+from werkzeug import datastructures
 from wtforms import Form, StringField, SelectField, SelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.widgets.core import Select, TableWidget
-from search import search_url
+from search import *
 
 class MultiCheckboxField(SelectMultipleField):
     #widget = ListWidget(prefix_label=False)
@@ -62,7 +63,7 @@ def create_app():
     def home():
         search = CourseSearchForm(request.form)
         if request.method == 'POST':
-            return search_url(search)
+            search_results(search)
         return render_template('index.html',form=search)
 
     """Handle the data from the POST request that will go to the main algorithm.
@@ -73,18 +74,22 @@ def create_app():
     """
     @app.route('/results')
     def search_results(search):
-        print(search.data['departments'])
-        if search.data['search'] == '' or not search.data['search']:
-            return redirect('/')
-        results = filter_courses(
-            search.data['search'].lower(),
-            search.data['select'][0],
-            search.data['divisions'],
-            search.data['departments'],
-            search.data['campuses'],
-            search.data['top']
-            )
+        data = search_url(search)
+        
+        df = [pd.json_normalize(data['result'])]
 
+        # print(search.data['departments'])
+        # if search.data['search'] == '' or not search.data['search']:
+        #     return redirect('/')
+        # results = filter_courses(
+        #     search.data['search'].lower(),
+        #     search.data['select'][0],
+        #     search.data['divisions'],
+        #     search.data['departments'],
+        #     search.data['campuses'],
+        #     search.data['top']
+        #     )
+        
         return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
 
     """
@@ -191,9 +196,11 @@ def filter_courses(pos_terms, year, division, department, campus, n_return=10):
     #6. Get the course data for relevant courses in order of score.
     idxs = [t[1] for t in sorted(list(zip(list(pos_vals),list(df.index))),key=lambda x:x[0],reverse=True)]
     tf = df.loc[idxs]
+    print(tf)
 
     #7. Separate results by year, starting with the table for the year actually searched for and then decreasing by year. Apply any filters now.
     main_table = tf[tf['Course Level'] == year]
+    print(type(main_table))
     for name,filter in [('Division',division), ('Department',department), ('Campus',campus)]:
         if filter != 'Any':
             main_table = main_table[main_table[name] == filter]
@@ -207,6 +214,7 @@ def filter_courses(pos_terms, year, division, department, campus, n_return=10):
                 tf = tf[tf[name] == filter]
         tables.append(tf[0:n_return][['Course','Name','Division','Course Description','Department','Course Level']])
         year -= 1
+    print("Tables", type(tables))
     return tables
 
 with open('resources/course_vectorizer.pickle','rb') as f:

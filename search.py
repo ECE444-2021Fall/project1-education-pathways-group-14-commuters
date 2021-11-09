@@ -1,9 +1,14 @@
 import acronyms_reverse
 from flask import redirect
 
-#Convert the search fields from the wtforms into an url which redirects the user to the search result page
-#The input search is CourseSearchForm return variable 
-#The return is redirect to the search result page
+from urllib.request import urlopen
+import json
+
+"""
+Convert the search fields from the wtforms into an url which redirects the user to the search result page
+The input search is CourseSearchForm return variable 
+The return is redirect to the search result page
+"""
 def search_url(search):
 
     #Extract the specific values from the form
@@ -16,7 +21,7 @@ def search_url(search):
     #search.data['top'] 
 
     #The API call is done by this url
-    url = "/api/course/search?"
+    url = "http://127.0.0.1:5000/api/course/search?"
     many_filter = False
 
     #Between each different tags it is required to have an "&"
@@ -51,4 +56,12 @@ def search_url(search):
         url += "Campus=" + acronyms_reverse.campus[campus]
         many_filter = True
     
-    return redirect(url)
+  
+    '''From the json and urllib libraries'''
+    # store the response of URL
+    response = urlopen(url)
+    
+    # storing the JSON response from url in data
+    data_json = json.loads(response.read())
+
+    return data_json
