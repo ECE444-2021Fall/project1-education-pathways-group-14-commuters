@@ -1,4 +1,4 @@
 # expecting data config
 
 class LocalDBConfig:
-    pass
+    MONGO_URI = 'mongodb+srv://admin:admin@cluster0.gtfd0.mongodb.net/courses'
