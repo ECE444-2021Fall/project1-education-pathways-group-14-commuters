@@ -57,3 +57,4 @@ zipp==3.5.0
 python-dotenv == 0.19.1
 pytest==6.1.1
 Flask_PyMongo==2.3.0
+dnspython==2.1.0

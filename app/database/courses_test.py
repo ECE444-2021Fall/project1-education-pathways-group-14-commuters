@@ -1,6 +1,6 @@
 import pytest
 import unittest
-from .courses import *
+from courses import *
 from werkzeug.datastructures import ImmutableMultiDict
 
 class Test_Map_Query_Params(unittest.TestCase):

@@ -1,7 +1,7 @@
 from flask import jsonify, request
 from flask import Blueprint
-from .db import courses
-from .acronyms import *
+from db import courses
+from acronyms import *
 
 courses_bp = Blueprint('courses_dp', __name__)
 
@@ -55,6 +55,7 @@ def get_courses_with_params():
 
 # map the query parameters by keys
 def map_query_params(args):
+    print(dict(args))
     return dict(args.lists())
 
 def get_original_value(key, value):
