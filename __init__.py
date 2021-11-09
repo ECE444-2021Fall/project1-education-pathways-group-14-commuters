@@ -23,15 +23,15 @@ from flask_pymongo import PyMongo
 """Build the search form, including dropdown menus at the top of the page, from the main datafile."""
 class CourseSearchForm(Form):
     df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
-    divisions = [('Any','---Division---')] + sorted([
+    divisions = [('Any','Any')] + sorted([
         (t,t) for t in set(df.Division.values)
     ])
 
-    departments = [('Any','---Department---')] + sorted([
+    departments = [('Any','Any')] + sorted([
         (t,t) for t in set(df.Department.values)
     ])
 
-    campus = [('Any','---Campus---')] + sorted([
+    campus = [('Any','Any')] + sorted([
         (t,t) for t in set(df.Campus.values)
     ])
 
@@ -44,12 +44,12 @@ class CourseSearchForm(Form):
         ('25','25'),
         ('50','50')
     ]
-    select = MultiCheckboxField('Course Year:', choices=year_choices)
-    top = SelectField('',choices=top)
-    divisions = SelectField('', choices=divisions)
-    departments = SelectField('', choices=departments)
-    campuses = SelectField('', choices=campus)
-    search = StringField('', render_kw={"placeholder": "Search Terms"})
+    select = MultiCheckboxField('Course Year(s)', choices=year_choices)
+    top = SelectField('Show Top',choices=top)
+    divisions = SelectField('Division', choices=divisions)
+    departments = SelectField('Department', choices=departments)
+    campuses = SelectField('Campus', choices=campus)
+    search = StringField('Search Term(s)', render_kw={"placeholder": "Search Terms"})
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -74,24 +74,37 @@ def create_app():
     """
     @app.route('/results')
     def search_results(search):
-        data = search_url(search)
         
-        df = [pd.json_normalize(data['result'])]
+        #data = search_url(search)
+
+        # print(data)
+        
+        #df = pd.json_normalize(data['result'])
+
+        #print(df)
+
+
+        #print(results)
 
         # print(search.data['departments'])
         # if search.data['search'] == '' or not search.data['search']:
         #     return redirect('/')
-        # results = filter_courses(
-        #     search.data['search'].lower(),
-        #     search.data['select'][0],
-        #     search.data['divisions'],
-        #     search.data['departments'],
-        #     search.data['campuses'],
-        #     search.data['top']
-        #     )
-        
-        return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+        try: 
+            results = filter_courses(
+            search.data['search'].lower(),
+            search.data['select'][0],
+            search.data['divisions'],
+            search.data['departments'],
+            search.data['campuses'],
+            search.data['top']
+            )
+        except:
+            results = []
 
+        #return render_template('results.html', form=search)
+        #return render_template('results.html',tables=df.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) ,form=search)
+        return render_template('results.html',tables=[t.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+        
     """
     This method shows the information about a single course.
     First, some basic error handling for if a course is passed that does not exist.
@@ -196,11 +209,9 @@ def filter_courses(pos_terms, year, division, department, campus, n_return=10):
     #6. Get the course data for relevant courses in order of score.
     idxs = [t[1] for t in sorted(list(zip(list(pos_vals),list(df.index))),key=lambda x:x[0],reverse=True)]
     tf = df.loc[idxs]
-    print(tf)
 
     #7. Separate results by year, starting with the table for the year actually searched for and then decreasing by year. Apply any filters now.
     main_table = tf[tf['Course Level'] == year]
-    print(type(main_table))
     for name,filter in [('Division',division), ('Department',department), ('Campus',campus)]:
         if filter != 'Any':
             main_table = main_table[main_table[name] == filter]
@@ -214,7 +225,6 @@ def filter_courses(pos_terms, year, division, department, campus, n_return=10):
                 tf = tf[tf[name] == filter]
         tables.append(tf[0:n_return][['Course','Name','Division','Course Description','Department','Course Level']])
         year -= 1
-    print("Tables", type(tables))
     return tables
 
 with open('resources/course_vectorizer.pickle','rb') as f:
@@ -227,7 +237,7 @@ df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
 app = create_app()
 
 with app.app_context():  
-    from .database.courses import courses_bp
+    from database.courses import courses_bp
     app.register_blueprint(courses_bp)
 
 if __name__=="__main__":

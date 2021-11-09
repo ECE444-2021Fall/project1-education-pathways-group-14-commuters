@@ -1,3 +1,85 @@
+body {
+  font-family: arial;
+  background-color: #FFFFFF;
+}
+
+.page-contents{
+  padding: 30px;
+}
+
+h1,h2,h3 {
+  color: #00204E;
+}
+
+.common-page-heading-container {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.common-page-form select,.common-page-form input {
+  border-radius: 5px;
+}
+
+.common-page-form-field {
+  margin: 2px auto;
+}
+
+#search-section {
+  width: 70vw;
+  margin: auto;
+  border-width: 1px;
+  border-radius: 4px;
+  border-style: solid;
+  border-color: #adb8c7;
+  padding: 10px;
+  background-color: #DCDCDC;
+}
+
+.common-page-form {
+  padding: 20px;
+  margin: 20px auto;
+}
+
+.common-page-submit-btn {
+  margin-top: 20px;
+}
+
 input[name="select"]{
-    margin: 5px;
+  margin: 5px;
+}
+
+.navbar {
+  background-color: #CFE6FF;
+  margin: 0;
+}
+
+#logo {
+  max-width: 20vw;
+  max-height: 18vh;
+  
+}
+
+.app-title {
+  white-space: nowrap;
+  color: #00204E;
+}
+
+.navbar-text {
+  color: #000000;
+}
+
+.navbar-toggle {
+  color: #00204E;
+}
+
+.btn {
+	box-shadow: none !important;
+  border: none !important;
+}
+
+h4 {
+  text-align: center;
 }
