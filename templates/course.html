@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container-fluid">
       <a class="navbar-brand" title="Home Page" href="/">
         <img src="/static/CARTE_logo_transparent_bg.png" alt="" class="img-fluid" id="logo">
@@ -134,16 +134,19 @@
 
       <div class="course-labels">
         {% if mayberestricted %}
-        <span class="badge rounded-pill bg-danger" tabindex="0" data-bs-toggle="tooltip" data-placement="bottom"
-          title="This course may be restricted to students within this department.">
-          Restricted
-        </span>
+        <h5>
+          <span class="badge rounded-pill bg-danger" tabindex="0" data-bs-toggle="tooltip" data-placement="bottom"
+            title="This course may be restricted to students within this department.">
+            Restricted
+          </span>
+        </h5>
         {% endif %}
-
         {% if faseavailable %}
-        <span class="badge rounded-pill bg-success" tabindex="0" data-bs-toggle="tooltip" data-placement="bottom"
-          title="This course is likely available to students in the Faculty of Applied Science and Engineering!">FASE
-          Available</span>
+        <h5>
+          <span class="badge rounded-pill bg-success" tabindex="0" data-bs-toggle="tooltip" data-placement="bottom"
+            title="This course is likely available to students in the Faculty of Applied Science and Engineering!">FASE
+            Available</span>
+        </h5>
         {% endif %}
       </div>
 
@@ -151,30 +154,35 @@
 
       {% for k,v in course.items() %}
       {% if 'Name' != k %}
-        <h4>{{k}}</h4> 
-        {% if k == 'Course Level' %}
+      <h4>{{k}}</h4>
+      {% if k == 'Course Level' %}
+      <h5>
         <span class="badge bg-warning text-dark">
           {{v | safe}}
         </span>
-        <br><br>
-        {% elif k == 'Campus' %}
+      </h5>
+      <br>
+      {% elif k == 'Campus' %}
+      <h5>
         <span class="badge bg-info text-dark">
           {{v | safe}}
         </span>
-        <br><br>
-        {% else %}
-        <p>{{v | safe}}</p>
-        {% endif %}
-        <br>
+      </h5>
+      <br>
+      {% else %}
+      <p>{{v | safe}}</p>
+      {% endif %}
+      <br>
       {% endif %}
       {% endfor %}
 
       {% for t,a in zip(terms,activities) %}
       {% if a == a %}
-        <h4>{{t}} Schedule</h4>
-        <div id="activities-schedule-table-container">
-          {{a | replace("table class=\"","table class=\"table table-light table-striped table-hover") | safe}}
-        </div>
+      <h4>{{t}} Schedule</h4>
+      <div id="activities-schedule-table-container">
+        {{a | replace("table class=\"","table class=\"table table-light table-striped table-hover") | safe}}
+      </div>
+      <br>
       {% endif %}
       {%endfor%}
 

@@ -24,7 +24,7 @@
 #activities-schedule-table-container {
   text-align: center;
   margin: 0px 10px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 #activities-schedule-table-container table {
@@ -42,6 +42,10 @@
   background-color: #00204E;
   color: white;
   border-collapse: separate;
+}
+
+#activities-schedule-table-container table td:first-child {
+  font-weight: bold;
 }
 
 #activities-schedule-table-container table th:last-child,#activities-schedule-table-container table td:last-child {

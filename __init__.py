@@ -10,7 +10,7 @@ from flask import Flask, render_template, request, redirect
 from wtforms import Form, StringField, SelectField, SelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.widgets.core import Select, TableWidget
-from search import search_url
+from search import *
 
 class MultiCheckboxField(SelectMultipleField):
     #widget = ListWidget(prefix_label=False)
@@ -62,7 +62,7 @@ def create_app():
     def home():
         search = CourseSearchForm(request.form)
         if request.method == 'POST':
-            return search_url(search)
+            return search_results(search)
         return render_template('index.html',form=search)
 
     """Handle the data from the POST request that will go to the main algorithm.
