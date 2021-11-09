@@ -63,7 +63,7 @@ def create_app():
     def home():
         search = CourseSearchForm(request.form)
         if request.method == 'POST':
-            search_results(search)
+            return search_results(search)
         return render_template('index.html',form=search)
 
     """Handle the data from the POST request that will go to the main algorithm.
@@ -75,35 +75,15 @@ def create_app():
     @app.route('/results')
     def search_results(search):
         
-        #data = search_url(search)
-
-        # print(data)
+        data = search_url(search)
         
-        #df = pd.json_normalize(data['result'])
+        df = pd.json_normalize(data['result'])
 
-        #print(df)
+        df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
 
+        df = [df]
 
-        #print(results)
-
-        # print(search.data['departments'])
-        # if search.data['search'] == '' or not search.data['search']:
-        #     return redirect('/')
-        try: 
-            results = filter_courses(
-            search.data['search'].lower(),
-            search.data['select'][0],
-            search.data['divisions'],
-            search.data['departments'],
-            search.data['campuses'],
-            search.data['top']
-            )
-        except:
-            results = []
-
-        #return render_template('results.html', form=search)
-        #return render_template('results.html',tables=df.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) ,form=search)
-        return render_template('results.html',tables=[t.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+        return render_template('results.html',tables=[t.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in df],form=search)
         
     """
     This method shows the information about a single course.
