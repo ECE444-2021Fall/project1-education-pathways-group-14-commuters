@@ -1,8 +1,9 @@
 from . import main
 from .forms import CourseSearchForm
-from ..model import df, G
+from ..model import G, courses
 from flask import render_template, request, redirect
 from .search import filter_courses
+import pandas as pd
 
 """Homepage is essentially just the course search form. If a post request is received, call the method that finds search results."""
 @main.route('/',methods=['GET','POST'])
@@ -45,22 +46,34 @@ def course(code):
     #If the course code is not present in the dataset, progressively remove the last character until we get a match.
     #For example, if there is no CSC413 then we find the first match that is CSC41.
     #If there are no matches for any character, just go home.
-    if code not in df.index:
+
+    course_code = []
+    
+    for index in courses.find({}, {'Code': True}):
+        course_code.append(index["Code"])
+
+    course_code = pd.DataFrame(course_code)
+    course_code.columns=['Code']
+
+
+    if code not in course_code['Code'].values:
         while True:
             code = code[:-1]
+
             if len(code) == 0:
                 return redirect('/')
-            t = df[df.index.str.contains(code)]
+
+            t = course_code[course_code['Code'].str.contains(code)]
+
             if len(t) > 0:
-                code = t.index[0]
+                code = t['Code'].values[0]
                 return redirect('/course/' + code)
 
-
-    course = df.loc[code]
+    course = courses.find({'Code': code}, {'_id': False})[0]
+    # print(courses.find({'Code': code}, {'_id': False})[0])
     #use course network graph to identify pre and post requisites
     pre = G.in_edges(code)
     post = G.out_edges(code)
-
     excl = course['Exclusion']
     coreq = course['Corequisite']
     aiprereq = course['AIPreReqs']

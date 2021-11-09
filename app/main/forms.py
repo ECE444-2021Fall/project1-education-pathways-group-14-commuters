@@ -1,24 +1,25 @@
 
 from wtforms import Form, StringField, SelectField
-from ..model import df
+from ..model import courses
 
 """Build the search form, including dropdown menus at the top of the page, from the main datafile."""
 class CourseSearchForm(Form):
-    divisions = [('Any','Any')] + sorted([
-        (t,t) for t in set(df.Division.values)
-    ])
+    divisions = ([('Any','Any')] + sorted(set([
+        (t['Division'],t['Division']) for (t) in (courses.find({}, {'Division': True}))
+    ])))
 
-    departments = [('Any','Any')] + sorted([
-        (t,t) for t in set(df.Department.values)
-    ])
+    departments = ([('Any','Any')] + sorted(set([
+        (t['Department'], t['Department']) for t in (courses.find({}, {'Department': True}))
+    ])))
+    # print(departments)
 
-    campus = [('Any','Any')] + sorted([
-        (t,t) for t in set(df.Campus.values)
-    ])
+    campus = ([('Any','Any')] + sorted(set([
+        (t['Campus'], t['Campus']) for t in (courses.find({}, {'Campus': True}))
+    ])))
 
-    year_choices = [
-        (t,t) for t in set(df['Course Level'].values)
-    ]
+    year_choices = sorted(set([
+        (t["Course Level"], t['Course Level']) for t in (courses.find({}, {'Course Level': True}))
+    ]))
             
     top = [
         ('10','10'),
