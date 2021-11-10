@@ -65,6 +65,14 @@ def create_app():
             return search_results(search)
         return render_template('index.html',form=search)
 
+    """Course search form. If a post request is received, call the method that finds search results."""
+    @app.route('/search',methods=['GET','POST'])
+    def search():
+        search = CourseSearchForm(request.form)
+        if request.method == 'POST':
+            return search_results(search)
+        return render_template('search.html',form=search)
+
     """Handle the data from the POST request that will go to the main algorithm.
     If we get an empty search, just go back to home.
     Otherwise, pull out the elements of the POST request that are used by the algorithm, and get the results.
