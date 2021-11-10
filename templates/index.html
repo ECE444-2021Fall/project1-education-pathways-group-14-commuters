@@ -10,13 +10,15 @@
 
 {% block page %}
 <div id="home-page-introduction">
-  <p>Welcome to Group 14's U of T Course Planning and Exploration Tool!</p>
-  <p>To find courses and view your degree plan, use the link in the navigation bar or the buttons below.</p>
+  <p>Welcome to Group 14's U of T Course Planning and Exploration Tool!
+    <br>
+    To find courses and view your degree plan, use the links in the navigation bar or the buttons below.</p>
 </div>
 <div id="description-section">
   <div class="row">
     <div class="col-sm-6">
-      <div class="card text-center">
+      <div class="card border-dark mb-3 text-center">
+        <img src="/static/undraw_search_re_x5gq.svg" class="card-img-top" alt="Search">
         <div class="card-header">
           <h3>Search</h3>
         </div>
@@ -24,19 +26,20 @@
           <h5 class="card-title">Find courses that you will enjoy!</h5>
           <p class="card-text"> Look for Courses that match your interests and view
             descriptions.</p>
-          <a href="/search" class="btn btn-secondary">Search Courses</a>
+          <a href="/search" class="btn btn-secondary">Search for Courses</a>
         </div>
       </div>
     </div>
     <div class="col-sm-6">
-      <div class="card text-center">
+      <div class="card border-dark mb-3 text-center">
+        <img src="/static/undraw_events_re_98ue.svg" class="card-img-top" alt="Plan">
         <div class="card-header">
           <h3>Plan</h3>
         </div>
         <div class="card-body">
           <h5 class="card-title">Plan out your degree!</h5>
           <p class="card-text">Login to view your past, current and planned courses in your Degree Plan Profile.</p>
-          <a href="/plan" class="btn btn-secondary">View Degree Timetable</a>
+          <a href="/plan" class="btn btn-secondary">View Plan Profile</a>
         </div>
       </div>
     </div>
