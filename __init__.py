@@ -82,6 +82,8 @@ def create_app():
         if len(df):
             df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
             df = df.rename(columns={"course_level":"Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Description", "campus":"Campus"})
+            for i in range(len(df)):
+                df["Code"][i] = '<a href="/course/%s" target="_blank"> %s <a>' %(df["Code"][i], df["Code"][i])
             df = [df]
         else: df = []
 
