@@ -73,7 +73,7 @@ def create_app():
     """
     @app.route('/results')
     def search_results(search):
-        print(search.data['departments'])
+        
         #if search.data['search'] == '' or not search.data['search']:
             #return redirect('/')
         try:

@@ -58,7 +58,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" title="Search" href="/search">
+                        <a class="nav-link" title="Search" href="/">
                             <button type="button" class="btn btn-outline-dark navbar-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                     class="bi bi-search" viewBox="0 0 16 16">
@@ -128,7 +128,7 @@
         </div>
         <div id="search-section">
 
-            <form method="post" class="common-page-form" role="form">
+            <form method="post" class="common-page-form" role="form" id="search-form">
                 <div class="form-group">
                     <div class="input-group input-group-lg mb-1">
                         {{ form.search(class_="form-control", placeholder="Enter Search Term(s)") }}
