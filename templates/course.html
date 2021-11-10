@@ -70,34 +70,34 @@
     {%endfor%}
 
     <br>
-    <table class="tg">
+    <table class="tg table table-bordered">
         <tbody>
             <tr>
-                <td class="tg-if7n" rowspan="3">
+                <td class="tg-if7n table-info" rowspan="3">
                     <p>Smart Pre-Requisites:</p>
                     {% for c in aip %}
                     <p><a href='/course/{{c}}'>{{c}}</a></p>
                     {% endfor %}
                 </td>
-                <td class="tg-0pky" rowspan="3">
+                <td class="tg-0pky table-primary" rowspan="3">
                     <p>Pre-Requisites:</p>
                     {% for c in pre %}
                     <p><a href='/course/{{c[0]}}'>{{c[0]}}</a></p>
                     {% endfor %}
                 </td>
-                <td class="tg-c3ow">
+                <td class="tg-c3ow table-success">
                     <p>Co-Requisites:</p>
                     {% for c in coreq %}
                     <p><a href='/course/{{c}}'>{{c}}</a></p>
                     {% endfor %}
                 </td>
-                <td class="tg-0pky" rowspan="3">
+                <td class="tg-0pky table-primary" rowspan="3">
                     <p>Pre-Requisite for:</p>
                     {% for c in post %}
                     <p><a href='/course/{{c[1]}}'>{{c[1]}}</a></p>
                     {% endfor %}
                 </td>
-                <td class="tg-0lax">
+                <td class="tg-0lax table-info">
                     <p>Smart Majors:</p>
                     {% for c in majors %}
                     <p>{{c}}</p>
@@ -105,8 +105,10 @@
                 </td>
             </tr>
             <tr>
-                <td class="tg-7btt">{{course['Name']}}</td>
-                <td class="tg-0lax" rowspan="2">
+                <td class="tg-7btt table-warning">
+                  {{course['Name']}}
+                </td>
+                <td class="tg-0lax table-info" rowspan="2">
                     <p>Smart Minors/Certs/Specs:</p>
                     {% for c in minors %}
                     <p>{{c}}</p>
@@ -114,7 +116,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="tg-dxqr">
+                <td class="tg-dxqr table-danger">
                     <p>Exclusions:</p>
                     {% for c in excl %}
                     <p><a href='/course/{{c}}'>{{c}}</a></p>
