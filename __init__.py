@@ -81,6 +81,7 @@ def create_app():
         
         if len(df):
             df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
+            df = df.rename(columns={"course_level":"Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Description", "campus":"Campus"})
             df = [df]
         else: df = []
 
