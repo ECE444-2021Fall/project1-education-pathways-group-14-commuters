@@ -78,10 +78,11 @@ def create_app():
         data = search_url(search)
         
         df = pd.json_normalize(data['result'])
-
-        df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
-
-        df = [df]
+        
+        if len(df):
+            df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
+            df = [df]
+        else: df = []
 
         return render_template('results.html',tables=[t.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in df],form=search)
         
