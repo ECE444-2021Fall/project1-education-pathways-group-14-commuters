@@ -9,54 +9,19 @@
 {% endblock %}
 
 {% block page %}
+
+<!--App Introduction-->
 <div id="home-page-introduction">
   <p>Welcome to Group 14's U of T Course Planning and Exploration Tool!
     <br>
-    To find courses and view your degree plan, use the links in the navigation bar or the buttons below.</p>
+    To find courses and view your degree plan, use the links in the navigation bar or the buttons below.
+  </p>
 </div>
+
 <div id="description-section">
-  
-  <div class="row row-cols-1 row-cols-md-2 g-4">
 
-    <div class="col-md-6">
-      <div class="card border-light text-center">
-        <img src="/static/undraw_search_re_x5gq.svg" class="card-img" alt="Search">
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="card border-light text-center">
-        <img src="/static/undraw_events_re_98ue.svg" class="card-img" alt="Plan">
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="card border-light text-center">
-        <div class="card-body">
-          <h3>Search</h3>
-          <h5 class="card-title">Find courses that you will enjoy!</h5>
-          <p class="card-text"> Look for Courses that match your interests and view
-            descriptions.</p>
-          <a href="/search" class="btn btn-secondary">Search for Courses</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="card border-light text-center">
-        <div class="card-body">
-          <h3>Plan</h3>
-          <h5 class="card-title">Plan out your degree!</h5>
-          <p class="card-text">Login to view your past, current and planned courses in your Degree Plan Profile.</p>
-          <a href="/plan" class="btn btn-secondary">View Plan Profile</a>
-        </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!--<div class="row">
+  <div class="row">
+    <!--Search Card with Image, Description and Button with Link to Search Page-->
     <div class="col-sm-6">
       <div class="card border-light text-center">
         <img src="/static/undraw_search_re_x5gq.svg" class="card-img-top" alt="Search">
@@ -71,6 +36,8 @@
         </div>
       </div>
     </div>
+
+    <!--Plan Card with Image, Description and Button with Link to Plan Page-->
     <div class="col-sm-6">
       <div class="card border-light text-center">
         <img src="/static/undraw_events_re_98ue.svg" class="card-img-top" alt="Plan">
@@ -85,5 +52,5 @@
       </div>
     </div>
   </div>
-</div>-->
+</div>
 {% endblock %}
