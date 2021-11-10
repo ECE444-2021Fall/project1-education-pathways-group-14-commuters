@@ -9,14 +9,7 @@ Convert the search fields from the wtforms into an url which redirects the user 
 The input search is CourseSearchForm return variable 
 The return is redirect to the search result page
 """
-def search_url(search):
-
-    #Extract the specific values from the form
-    tags = search.data['search']
-    year = search.data['select']
-    division = search.data['divisions']
-    department = search.data['departments']
-    campus = search.data['campuses']
+def search_url(search=None, code=None):
 
     #search.data['top'] 
 
@@ -27,34 +20,46 @@ def search_url(search):
     #Between each different tags it is required to have an "&"
     #The values are not case sensitive but the categories (e.g. "Division=") are case sensitive
     #If no specific filters have been applied no need to include the categories in the url (same result but url look more compact this way)
-    if(len(tags) > 0):
-        terms = [t for t in tags.split(',')]
-        print(terms)
-        for i in range(len(terms)): 
+    if search != None:
+        
+        #Extract the specific values from the form
+        tags = search.data['search']
+        year = search.data['select']
+        division = search.data['divisions']
+        department = search.data['departments']
+        campus = search.data['campuses']
+
+        if(len(tags) > 0):
+            terms = [t for t in tags.split(',')]
+            print(terms)
+            for i in range(len(terms)): 
+                if(many_filter): url += "&"
+                url += "keyword=" + terms[i]
+                many_filter = True
+
+        if(division != "Any"):
             if(many_filter): url += "&"
-            url += "keyword=" + terms[i]
+            url += "Division=" + acronyms_reverse.division[division]
             many_filter = True
 
-    if(division != "Any"):
-        if(many_filter): url += "&"
-        url += "Division=" + acronyms_reverse.division[division]
-        many_filter = True
-
-    if(department != "Any"):
-        if(many_filter): url += "&"
-        url += "Department=" + acronyms_reverse.department[department]
-        many_filter = True
-
-    if(len(year) > 0):
-        for i in range(len(year)): 
+        if(department != "Any"):
             if(many_filter): url += "&"
-            url += "Course+Level=" + str(year[i])
+            url += "Department=" + acronyms_reverse.department[department]
             many_filter = True
 
-    if(campus != "Any"):
-        if(many_filter): url += "&"
-        url += "Campus=" + acronyms_reverse.campus[campus]
-        many_filter = True
+        if(len(year) > 0):
+            for i in range(len(year)): 
+                if(many_filter): url += "&"
+                url += "Course+Level=" + str(year[i])
+                many_filter = True
+
+        if(campus != "Any"):
+            if(many_filter): url += "&"
+            url += "Campus=" + acronyms_reverse.campus[campus]
+            many_filter = True
+    elif code != None:
+        url += "Code=" + str(code)
+
     
   
     '''From the json and urllib libraries'''

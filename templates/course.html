@@ -28,7 +28,7 @@
     </p>
     {% endif %}
 
-    {% for t,a in zip(terms,activities) %}
+    <!-- {% for t,a in zip(terms,activities) %} -->
     <p>
       <b>{{t}}:</b>
     </p>
@@ -55,11 +55,11 @@
         <tbody>
           <tr>
             <td class="tg-if7n" rowspan="3">
-            <p>Smart Pre-Requisites:</p>
+            <!-- <p>Smart Pre-Requisites:</p>
                 {% for c in aip %}
                   <p><a href='/course/{{c}}'>{{c}}</a></p>
                 {% endfor %}
-            </td>
+            </td> -->
             <td class="tg-0pky" rowspan="3">
             <p>Pre-Requisites:</p>
                 {% for c in pre %}
@@ -86,13 +86,13 @@
             </td>
           </tr>
           <tr>
-            <td class="tg-7btt">{{course['Name']}}</td>
+            <!-- <td class="tg-7btt">{{course['Name']}}</td>
             <td class="tg-0lax" rowspan="2">
               <p>Smart Minors/Certs/Specs:</p>
               {% for c in minors %}
                       <p>{{c}}</p>
               {% endfor %}
-            </td>  
+            </td>   -->
           </tr>
           <tr>
             <td class="tg-dxqr">

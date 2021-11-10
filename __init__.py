@@ -94,35 +94,52 @@ def create_app():
     @app.route('/course/<code>')
     def course(code):
 
+    #     ['apsc_electives', 'arts_and_science_breadth',
+    #    'arts_and_science_distribution', 'campus', 'code', 'corequisite',
+    #    'course_description', 'course_level', 'department', 'division',
+    #    'exclusion', 'fase_available', 'last_updated', 'majors_outcomes',
+    #    'maybe_restricted', 'name', 'prerequisites', 'recommended_preparation',
+    #    'term', 'utm_distribution', 'utsc_breadth']
+
+        data = search_url(code=code)
+
+        df = pd.json_normalize(data['result'])
+
         #If the course code is not present in the dataset, progressively remove the last character until we get a match.
         #For example, if there is no CSC413 then we find the first match that is CSC41.
         #If there are no matches for any character, just go home.
-        if code not in df.index:
-            while True:
-                code = code[:-1]
-                if len(code) == 0:
-                    return redirect('/')
-                t = df[df.index.str.contains(code)]
-                if len(t) > 0:
-                    code = t.index[0]
-                    return redirect('/course/' + code)
+        # if code not in df.index:
+        #     while True:
+        #         code = code[:-1]
+        #         if len(code) == 0:
+        #             return redirect('/')
+        #         t = df[df.index.str.contains(code)]
+        #         if len(t) > 0:
+        #             code = t.index[0]
+        #             return redirect('/course/' + code)
 
 
-        course = df.loc[code]
+        course = df
+
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa", df.columns)
+
         #use course network graph to identify pre and post requisites
         pre = G.in_edges(code)
         post = G.out_edges(code)
 
-        excl = course['Exclusion']
-        coreq = course['Corequisite']
-        aiprereq = course['AIPreReqs']
-        majors = course['MajorsOutcomes']
-        minors = course['MinorsOutcomes']
-        faseavailable = course['FASEAvailable']
-        mayberestricted = course['MaybeRestricted']
-        terms = course['Term']
-        activities = course['Activity']
-        course = {k:v for k,v in course.items() if k not in ['Course','Course Level Number','FASEAvailable','MaybeRestricted','URL','Pre-requisites','Exclusion','Corequisite','Recommended Preparation','AIPreReqs','MajorsOutcomes','MinorsOutcomes','Term','Activity'] and v==v}
+        excl = course['exclusion']
+        coreq = "<h1>HELLO</h1>"
+        #aiprereq = course['AIPreReqs']
+        majors = course['majors_outcomes']
+        #minors = course['MinorsOutcomes']
+        faseavailable = course['fase_available'][0]
+        mayberestricted = course['maybe_restricted'][0]
+        terms = course['term']
+
+        print("AAAAAAAAAAAAAAAAAAA", course['prerequisites'][0])
+
+        #activities = course['Activity']
+        #course = {k:v for k,v in course.items() if k not in ['name','code','fase_available','maybe_restricted','prerequisites','exclusion','corequisite','recommended_preparation', 'majors_outcomes', 'term'] and v==v}
         return render_template(
             'course.html',
             course=course,
@@ -130,13 +147,13 @@ def create_app():
             post=post,
             excl=excl,
             coreq=coreq,
-            aip=aiprereq,
+            #aip=pre,
             majors=majors,
-            minors=minors,
+            #minors=pre,
             faseavailable=faseavailable,
             mayberestricted=mayberestricted,
             terms=terms,
-            activities=activities,
+            #activities=pre,
             zip=zip
             )
     return app
