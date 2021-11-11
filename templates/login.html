@@ -41,10 +41,16 @@
 
 <div class="login-elements">
   <form action="/login" method="post">
-    <input type="text" placeholder="Username" name="username" value="{{
+    <div class="mb-3">
+      <label for="usernameInput" class="form-label"><b>Username</b></label>
+      <input type="text" class="form-control" placeholder="Username" id="usernameInput" name="username" value="{{
         request.form.username }}">
-    <input type="password" placeholder="Password" name="password" value="{{
+    </div>
+    <div class="mb-3">
+      <label for="passwordInput" class="form-label"><b>Password</b></label>
+      <input type="password" class="form-control" placeholder="Password" id="passwordInput" name="password" value="{{
         request.form.password }}">
+    </div>
     <input class="btn btn-secondary" type="submit" value="Login">
   </form>
 </div>
