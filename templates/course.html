@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-<title>{{course['Name']}}</title>
+<title>{{course['Course Name']}}</title>
 {% endblock %}
 
 {% block page %}
@@ -16,7 +16,7 @@
 
 <br>
 <div id="course-info">
-    <h3>{{course['Name']}}</h3>
+    <h3>{{course['Course Name']}}</h3>
 
     <div class="course-labels">
         {% if mayberestricted %}
@@ -62,80 +62,19 @@
     {% endif %}
     {% endfor %}
 
-<<<<<<< HEAD
     <!-- {% for t,a in zip(terms,activities) %} -->
-    <p>
-      <b>{{t}}:</b>
-    </p>
-    <p>
-      {{a | safe}}
-    </p>
-=======
-    {% for t,a in zip(terms,activities) %}
-    {% if a == a %}
+    <!-- {% if a == a %}
     <h4>{{t}} Schedule</h4>
     <div id="activities-schedule-table-container">
         {{a | replace("table class=\"","table class=\"table table-light table-striped table-hover") | safe}}
     </div>
     <br>
     {% endif %}
->>>>>>> origin/frontend
-    {%endfor%}
+    {%endfor%} -->
 
     <br>
     <table class="tg table table-bordered">
         <tbody>
-<<<<<<< HEAD
-          <tr>
-            <td class="tg-if7n" rowspan="3">
-            <!-- <p>Smart Pre-Requisites:</p>
-                {% for c in aip %}
-                  <p><a href='/course/{{c}}'>{{c}}</a></p>
-                {% endfor %}
-            </td> -->
-            <td class="tg-0pky" rowspan="3">
-            <p>Pre-Requisites:</p>
-                {% for c in pre %}
-                    <p><a href='/course/{{c[0]}}'>{{c[0]}}</a></p>
-                {% endfor %}
-            </td>
-            <td class="tg-c3ow">
-            <p>Co-Requisites:</p>
-                {% for c in coreq %}
-                    <p><a href='/course/{{c}}'>{{c}}</a></p> 
-                {% endfor %}
-            </td>
-            <td class="tg-0pky" rowspan="3">
-                <p>Pre-Requisite for:</p>
-                {% for c in post %}
-                    <p><a href='/course/{{c[1]}}'>{{c[1]}}</a></p>
-                {% endfor %}
-            </td>
-            <td class="tg-0lax">
-              <p>Smart Majors:</p>
-              {% for c in majors %}
-                    <p>{{c}}</p>
-              {% endfor %}
-            </td>
-          </tr>
-          <tr>
-            <!-- <td class="tg-7btt">{{course['Name']}}</td>
-            <td class="tg-0lax" rowspan="2">
-              <p>Smart Minors/Certs/Specs:</p>
-              {% for c in minors %}
-                      <p>{{c}}</p>
-              {% endfor %}
-            </td>   -->
-          </tr>
-          <tr>
-            <td class="tg-dxqr">
-                <p>Exclusions:</p>
-                {% for c in excl %}
-                    <p><a href='/course/{{c}}'>{{c}}</a></p>
-                {% endfor %}
-            </td>
-          </tr>
-=======
             <tr>
                 <td class="tg-if7n table-primary" rowspan="3">
                     <p><b>Smart Pre-Requisites</b></p>
@@ -170,7 +109,7 @@
             </tr>
             <tr>
                 <td class="tg-7btt table-success">
-                  <b>{{course['Name']}}</b>
+                  <b>{{course['Course Name']}}</b>
                 </td>
                 <td class="tg-0lax table-primary" rowspan="2">
                     <p><b>Smart Minors/Certs/Specs</b></p>
@@ -187,7 +126,6 @@
                     {% endfor %}
                 </td>
             </tr>
->>>>>>> origin/frontend
         </tbody>
     </table>
 

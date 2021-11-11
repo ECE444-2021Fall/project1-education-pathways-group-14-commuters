@@ -67,7 +67,7 @@ def create_app():
 
 
     """Course search form. If a post request is received, call the method that finds search results."""
-    @app.route('/search',methods=['GET','POST'])
+    @app.route('/find',methods=['GET','POST'])
     def search():
         search = CourseSearchForm(request.form)
         if request.method == 'POST':
@@ -90,7 +90,7 @@ def create_app():
         
         if len(df):
             df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
-            df = df.rename(columns={"course_level":"Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Description", "campus":"Campus"})
+            df = df.rename(columns={"course_level":"Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Course Description", "campus":"Campus"})
             for i in range(len(df)):
                 df["Code"][i] = '<a href="/course/%s" target="_blank"> %s <a>' %(df["Code"][i], df["Code"][i])
             df = [df]
@@ -120,24 +120,21 @@ def create_app():
 
         course = df
 
-
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa", df.columns)
-
         #use course network graph to identify pre and post requisites
-        pre = G.in_edges(code)
+        pre = course['prerequisites']
         post = G.out_edges(code)
 
-        excl = course['exclusion']
-        coreq = course['corequisite']
-        aiprereq = course['ai_pre_reqs']
-        majors = course['majors_outcomes']
-        minors = course['minors_outcomes']
+        excl = course['exclusion'][0]
+        coreq = course['corequisite'][0]
+        aiprereq = course['ai_pre_reqs'][0]
+        majors = course['majors_outcomes'][0]
+        minors = course['minors_outcomes'][0]
         faseavailable = course['fase_available'][0]
         mayberestricted = course['maybe_restricted'][0]
-        terms = course['term']
+        terms = course['term'][0]
 
-        course = df[["course_level", "code", "department", "name", "division", "course_description", "campus", "term"]]
-        course = course.rename(columns={"course_level":"Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Description", "campus":"Campus", "term":"Term"})
+        course = df[["division", "course_description", "department", "course_level",  "campus", "code", "name"]]
+        course = course.rename(columns={"course_level":"Course Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Course Description", "campus":"Campus"})
         course = course.iloc[0]
 
         #activities = course['Activity']
@@ -155,7 +152,7 @@ def create_app():
             faseavailable=faseavailable,
             mayberestricted=mayberestricted,
             terms=terms,
-            #activities=pre,
+            #activities=activities,
             zip=zip
             )
 
