@@ -98,32 +98,19 @@ def create_app():
     @app.route('/course/<code>')
     def course(code):
 
-    #     ['apsc_electives', 'arts_and_science_breadth',
+    # ['ai_pre_reqs', 'apsc_electives', 'arts_and_science_breadth',
     #    'arts_and_science_distribution', 'campus', 'code', 'corequisite',
     #    'course_description', 'course_level', 'department', 'division',
     #    'exclusion', 'fase_available', 'last_updated', 'majors_outcomes',
-    #    'maybe_restricted', 'name', 'prerequisites', 'recommended_preparation',
-    #    'term', 'utm_distribution', 'utsc_breadth']
+    #    'maybe_restricted', 'minors_outcomes', 'name', 'prerequisites',
+    #    'recommended_preparation', 'term', 'utm_distribution', 'utsc_breadth']
 
         data = search_url(code=code)
 
         df = pd.json_normalize(data['result'])
 
-        #If the course code is not present in the dataset, progressively remove the last character until we get a match.
-        #For example, if there is no CSC413 then we find the first match that is CSC41.
-        #If there are no matches for any character, just go home.
-        # if code not in df.index:
-        #     while True:
-        #         code = code[:-1]
-        #         if len(code) == 0:
-        #             return redirect('/')
-        #         t = df[df.index.str.contains(code)]
-        #         if len(t) > 0:
-        #             code = t.index[0]
-        #             return redirect('/course/' + code)
-
-
         course = df
+
 
         print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa", df.columns)
 
@@ -132,15 +119,17 @@ def create_app():
         post = G.out_edges(code)
 
         excl = course['exclusion']
-        coreq = "<h1>HELLO</h1>"
-        #aiprereq = course['AIPreReqs']
+        coreq = course['corequisite']
+        aiprereq = course['ai_pre_reqs']
         majors = course['majors_outcomes']
-        #minors = course['MinorsOutcomes']
+        minors = course['minors_outcomes']
         faseavailable = course['fase_available'][0]
         mayberestricted = course['maybe_restricted'][0]
         terms = course['term']
 
-        print("AAAAAAAAAAAAAAAAAAA", course['prerequisites'][0])
+        course = df[["course_level", "code", "department", "name", "division", "course_description", "campus", "term"]]
+        course = course.rename(columns={"course_level":"Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Description", "campus":"Campus", "term":"Term"})
+        course = course.iloc[0]
 
         #activities = course['Activity']
         #course = {k:v for k,v in course.items() if k not in ['name','code','fase_available','maybe_restricted','prerequisites','exclusion','corequisite','recommended_preparation', 'majors_outcomes', 'term'] and v==v}
@@ -151,9 +140,9 @@ def create_app():
             post=post,
             excl=excl,
             coreq=coreq,
-            #aip=pre,
+            aip=aiprereq,
             majors=majors,
-            #minors=pre,
+            minors=minors,
             faseavailable=faseavailable,
             mayberestricted=mayberestricted,
             terms=terms,
