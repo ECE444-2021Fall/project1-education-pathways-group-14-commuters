@@ -122,7 +122,7 @@ def create_app():
 
         #use course network graph to identify pre and post requisites
         pre = course['prerequisites']
-        post = G.out_edges(code)
+        #post = G.out_edges(code)
 
         excl = course['exclusion'][0]
         coreq = course['corequisite'][0]
@@ -132,18 +132,18 @@ def create_app():
         faseavailable = course['fase_available'][0]
         mayberestricted = course['maybe_restricted'][0]
         terms = course['term'][0]
+        activities = course['activity'][0]
 
         course = df[["division", "course_description", "department", "course_level",  "campus", "code", "name"]]
-        course = course.rename(columns={"course_level":"Course Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Course Description", "campus":"Campus"})
+        course = course.rename(columns={"course_level":"Course Level", "code":"Code", "department":"Department", "name":"Course Name", "division":"Division", "course_description":"Course Description", "campus":"Campus"})
         course = course.iloc[0]
 
-        #activities = course['Activity']
         #course = {k:v for k,v in course.items() if k not in ['name','code','fase_available','maybe_restricted','prerequisites','exclusion','corequisite','recommended_preparation', 'majors_outcomes', 'term'] and v==v}
         return render_template(
             'course.html',
             course=course,
             pre=pre, 
-            post=post,
+            #post=post,
             excl=excl,
             coreq=coreq,
             aip=aiprereq,
@@ -152,7 +152,7 @@ def create_app():
             faseavailable=faseavailable,
             mayberestricted=mayberestricted,
             terms=terms,
-            #activities=activities,
+            activities=activities,
             zip=zip
             )
 

@@ -16,6 +16,7 @@
 
 <br>
 <div id="course-info">
+    <h3>{{course['Code']}}</h3>
     <h3>{{course['Course Name']}}</h3>
 
     <div class="course-labels">
@@ -39,7 +40,7 @@
     <br>
 
     {% for k,v in course.items() %}
-    {% if 'Name' != k %}
+    {% if k != 'Course Name' and k != 'Code' %}
     <h4>{{k}}</h4>
     {% if k == 'Course Level' %}
     <h5>
@@ -62,15 +63,15 @@
     {% endif %}
     {% endfor %}
 
-    <!-- {% for t,a in zip(terms,activities) %} -->
-    <!-- {% if a == a %}
+    {% for t,a in zip(terms,activities) %}
+    {% if a == a %}
     <h4>{{t}} Schedule</h4>
     <div id="activities-schedule-table-container">
         {{a | replace("table class=\"","table class=\"table table-light table-striped table-hover") | safe}}
     </div>
     <br>
     {% endif %}
-    {%endfor%} -->
+    {%endfor%}
 
     <br>
     <table class="tg table table-bordered">
@@ -79,25 +80,25 @@
                 <td class="tg-if7n table-primary" rowspan="3">
                     <p><b>Smart Pre-Requisites</b></p>
                     {% for c in aip %}
-                    <p><a class="btn btn-outline-dark" href='/course/{{c}}'>{{c}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c}}' target="_blank">{{c}}</a></p>
                     {% endfor %}
                 </td>
                 <td class="tg-0pky table-info" rowspan="3">
                     <p><b>Pre-Requisites</b></p>
                     {% for c in pre %}
-                    <p><a class="btn btn-outline-dark" href='/course/{{c[0]}}'>{{c[0]}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c[0]}}' target="_blank">{{c[0]}}</a></p>
                     {% endfor %}
                 </td>
                 <td class="tg-c3ow table-warning">
                     <p><b>Co-Requisites</b></p>
                     {% for c in coreq %}
-                    <p><a class="btn btn-outline-dark" href='/course/{{c}}'>{{c}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c}}' target="_blank">{{c}}</a></p>
                     {% endfor %}
                 </td>
                 <td class="tg-0pky table-info" rowspan="3">
                     <p><b>Pre-Requisite for</b></p>
                     {% for c in post %}
-                    <p><a class="btn btn-outline-dark" href='/course/{{c[1]}}'>{{c[1]}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c[1]}}' target="_blank">{{c[1]}}</a></p>
                     {% endfor %}
                 </td>
                 <td class="tg-0lax table-primary">
@@ -122,7 +123,7 @@
                 <td class="tg-dxqr table-danger">
                     <p><b>Exclusions</b></p>
                     {% for c in excl %}
-                    <p><a class="btn btn-outline-dark" href='/course/{{c}}'>{{c}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c}}' target="_blank">{{c}}</a></p>
                     {% endfor %}
                 </td>
             </tr>
