@@ -49,7 +49,8 @@ def get_courses_with_params():
                 'maybe_restricted': s['MaybeRestricted'],
                 'majors_outcomes': s['MajorsOutcomes'],
                 'minors_outcomes': s['MinorsOutcomes'],
-                'ai_pre_reqs': s['AIPreReqs']
+                'ai_pre_reqs': s['AIPreReqs'],
+                'activity': s['Activity']
             })
         except KeyError: # when key does not exist in s
             return jsonify({'result' : []}), 500
