@@ -1,7 +1,7 @@
 {% extends "base_template.html" %}
 
 {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/course.css') }}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/course.css')}}">
 {% endblock %}
 
 {% block title %}
@@ -12,6 +12,9 @@
 <div class="course-page-sub-heading">
     <h2>Course Details</h2>
 </div>
+<br>
+
+<br>
 <div id="course-info">
     <h3>{{course['Name']}}</h3>
 
@@ -73,43 +76,43 @@
     <table class="tg table table-bordered">
         <tbody>
             <tr>
-                <td class="tg-if7n table-info" rowspan="3">
-                    <p>Smart Pre-Requisites:</p>
+                <td class="tg-if7n table-primary" rowspan="3">
+                    <p><b>Smart Pre-Requisites</b></p>
                     {% for c in aip %}
-                    <p><a href='/course/{{c}}'>{{c}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c}}'>{{c}}</a></p>
                     {% endfor %}
                 </td>
-                <td class="tg-0pky table-primary" rowspan="3">
-                    <p>Pre-Requisites:</p>
+                <td class="tg-0pky table-info" rowspan="3">
+                    <p><b>Pre-Requisites</b></p>
                     {% for c in pre %}
-                    <p><a href='/course/{{c[0]}}'>{{c[0]}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c[0]}}'>{{c[0]}}</a></p>
                     {% endfor %}
                 </td>
-                <td class="tg-c3ow table-success">
-                    <p>Co-Requisites:</p>
+                <td class="tg-c3ow table-warning">
+                    <p><b>Co-Requisites</b></p>
                     {% for c in coreq %}
-                    <p><a href='/course/{{c}}'>{{c}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c}}'>{{c}}</a></p>
                     {% endfor %}
                 </td>
-                <td class="tg-0pky table-primary" rowspan="3">
-                    <p>Pre-Requisite for:</p>
+                <td class="tg-0pky table-info" rowspan="3">
+                    <p><b>Pre-Requisite for</b></p>
                     {% for c in post %}
-                    <p><a href='/course/{{c[1]}}'>{{c[1]}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c[1]}}'>{{c[1]}}</a></p>
                     {% endfor %}
                 </td>
-                <td class="tg-0lax table-info">
-                    <p>Smart Majors:</p>
+                <td class="tg-0lax table-primary">
+                    <p><b>Smart Majors</b></p>
                     {% for c in majors %}
                     <p>{{c}}</p>
                     {% endfor %}
                 </td>
             </tr>
             <tr>
-                <td class="tg-7btt table-warning">
-                  {{course['Name']}}
+                <td class="tg-7btt table-success">
+                  <b>{{course['Name']}}</b>
                 </td>
-                <td class="tg-0lax table-info" rowspan="2">
-                    <p>Smart Minors/Certs/Specs:</p>
+                <td class="tg-0lax table-primary" rowspan="2">
+                    <p><b>Smart Minors/Certs/Specs</b></p>
                     {% for c in minors %}
                     <p>{{c}}</p>
                     {% endfor %}
@@ -117,9 +120,9 @@
             </tr>
             <tr>
                 <td class="tg-dxqr table-danger">
-                    <p>Exclusions:</p>
+                    <p><b>Exclusions</b></p>
                     {% for c in excl %}
-                    <p><a href='/course/{{c}}'>{{c}}</a></p>
+                    <p><a class="btn btn-outline-dark" href='/course/{{c}}'>{{c}}</a></p>
                     {% endfor %}
                 </td>
             </tr>

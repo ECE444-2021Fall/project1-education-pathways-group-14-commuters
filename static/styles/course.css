@@ -65,15 +65,17 @@ h4 {
 }
 
 .tg {
-  border-collapse: collapse;
-  border-spacing: 0;
+  border-collapse: separate;
+  border-spacing: 1px;
   margin: 0px auto;
+  text-align: center;
+  vertical-align: middle;
+  overflow-x: auto;
 }
 
 .tg td {
-  border-color: black;
   border-style: solid;
-  border-width: 1px;
+  border-width: 2px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
@@ -82,9 +84,8 @@ h4 {
 }
 
 .tg th {
-  border-color: black;
   border-style: solid;
-  border-width: 1px;
+  border-width: 2px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
@@ -93,42 +94,15 @@ h4 {
   word-break: normal;
 }
 
-.tg .tg-if7n {
-  border-color: #38fff8;
-  text-align: center;
-  vertical-align: top
-}
-
-.tg .tg-dxqr {
-  border-color: inherit;
-  color: #fe0000;
-  text-align: center;
-  vertical-align: top
-}
-
-.tg .tg-c3ow {
-  border-color: inherit;
-  text-align: center;
-  vertical-align: top
-}
-
-.tg .tg-0pky {
-  border-color: inherit;
-  text-align: center;
-  vertical-align: top
-}
-
-.tg .tg-7btt {
-  border-color: inherit;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: top
-}
-
-.tg .tg-0lax {
-  border-color: #38fff8;
-  text-align: center;
-  vertical-align: top
+.tg th {
+  border-style: solid;
+  border-width: 2px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  overflow: hidden;
+  padding: 10px 5px;
+  word-break: normal;
 }
 
 ::-webkit-scrollbar {

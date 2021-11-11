@@ -6,7 +6,7 @@ import networkx as nx
 from collections import defaultdict
 from scipy.sparse import load_npz
 from sklearn.metrics.pairwise import cosine_similarity
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, flash
 from wtforms import Form, StringField, SelectField, SelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.widgets.core import Select, TableWidget
@@ -50,20 +50,21 @@ class CourseSearchForm(Form):
     campuses = SelectField('Campus', choices=campus)
     search = StringField('Search Term(s)', render_kw={"placeholder": "Search Terms"})
 
+
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
+    app.config['SECRET_KEY'] = 'secret'
+
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
 
     """Homepage is essentially just the course search form. If a post request is received, call the method that finds search results."""
-    @app.route('/',methods=['GET','POST'])
+    @app.route('/',methods=['GET'])
     def home():
-        search = CourseSearchForm(request.form)
-        if request.method == 'POST':
-            return search_results(search)
-        return render_template('index.html',form=search)
+        return render_template('index.html')
+
 
     """Course search form. If a post request is received, call the method that finds search results."""
     @app.route('/search',methods=['GET','POST'])
@@ -72,6 +73,7 @@ def create_app():
         if request.method == 'POST':
             return search_results(search)
         return render_template('search.html',form=search)
+
 
     """Handle the data from the POST request that will go to the main algorithm.
     If we get an empty search, just go back to home.
@@ -97,6 +99,7 @@ def create_app():
             results = []
 
         return render_template('results.html',tables=[t.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+
 
     """
     This method shows the information about a single course.
@@ -152,7 +155,65 @@ def create_app():
             activities=activities,
             zip=zip
             )
+
+
+    """
+    Method to Manage User Login
+    """
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+
+        #When submit button is pressed
+        if request.method == 'POST':
+
+            #Verify that username and password match the required values
+            if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+                #Flash login error
+                flash('Invalid Credentials. Please try again.',"danger")
+
+            else:
+                #Login sucessful
+                #Set session variable to use for access 
+                session['username'] = request.form['username']
+                #Flash success message
+                flash('You were successfully logged in.',"success")
+
+        return render_template('login.html')
+    
+
+    """
+    Method to Logout User
+    """
+    @app.route('/logout')
+    def logout():
+        #If user logs out, delete session username variable
+        session.pop('username', None)
+
+        return render_template('index.html')
+
+
+    """
+    Method to View User Timetable
+    """
+    @app.route('/plan')
+    def planner():
+
+        #If user tries to access planner without logging in
+        #Redirect to Login Page
+        if 'username' not in session or session['username'] is None:
+            flash('Login to view profile.',"warning")
+
+            return redirect('/login')
+
+        #Get session user name
+        user = session['username']
+        
+        #Open Planner page using user 
+        return(render_template('planner.html', user=user))
+
+
     return app
+    
 
 """
 Main algorithm for searching courses. 
