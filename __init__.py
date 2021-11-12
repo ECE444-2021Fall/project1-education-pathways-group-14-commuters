@@ -114,6 +114,12 @@ def create_app():
 
         df = pd.json_normalize(data['result'])
 
+        #Since the calls are made for course that do exist in the database this should not happen
+        #However, if user brute force by typing his own link he will be redirect to home directory to not make page crash
+        if len(df) == 0:
+            return redirect('/')
+            
+
         course = df
 
         #use course network graph to identify pre and post requisites
