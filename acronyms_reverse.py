@@ -1,3 +1,6 @@
+'''
+A reverse version of the database/acronyms.py file to be able to generate an API call with a simplier and more compact URL 
+'''
 campus = {'Mississauga': 'utm', 'Scarborough': 'utsc', 'St. George': 'utsg'}
 
 division = {'Faculty of Applied Science & Engineering': 'apsc', 'Faculty of Arts and Science': 'artsci', 'Faculty of Music': 'music', 'John H. Daniels Faculty of Architecture, Landscape, & Design': 'arcla', ' University of Toronto Mississauga': 'utm', 'University of Toronto Scarborough': 'utsc'}
