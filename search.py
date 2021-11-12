@@ -5,13 +5,13 @@ from urllib.request import urlopen
 import json
 
 """
-Convert the search fields from the wtforms into an url which redirects the user to the search result page
-The input search is CourseSearchForm return variable 
-The return is redirect to the search result page
+Convert the search fields from the wtforms or a course code into an API call and returns a JSON with the courses it found
+The input search is CourseSearchForm return variable or a course code 
+If both inputs are used in a call only the function will prioritize the search form results rather than the course code
+If no inputs are given it will return a list of all the course in the database
+The return value is JSON file containing the results of the API call
 """
 def search_url(search=None, code=None):
-
-    #search.data['top'] 
 
     #The API call is done by this url
     url = "http://127.0.0.1:5000/api/course/search?"
@@ -31,7 +31,8 @@ def search_url(search=None, code=None):
 
         if(len(tags) > 0):
             terms = [t for t in tags.split(',')]
-            print(terms)
+
+            #The user may input several keyword
             for i in range(len(terms)): 
                 if(many_filter): url += "&"
                 url += "keyword=" + terms[i]
@@ -48,6 +49,7 @@ def search_url(search=None, code=None):
             many_filter = True
 
         if(len(year) > 0):
+            #Similar to the tags the user may select multiple years
             for i in range(len(year)): 
                 if(many_filter): url += "&"
                 url += "Course+Level=" + str(year[i])
