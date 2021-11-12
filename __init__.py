@@ -13,7 +13,7 @@ from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.widgets.core import Select, TableWidget
 from database import acronyms
 from search import *
-from acronyms import *
+
 
 class MultiCheckboxField(SelectMultipleField):
     #widget = ListWidget(prefix_label=False)
