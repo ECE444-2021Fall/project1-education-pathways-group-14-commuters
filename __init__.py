@@ -87,6 +87,9 @@ def create_app():
         data = search_url(search)
         
         df = pd.json_normalize(data['result'])
+
+        if search != None:
+            df = df.head(int(search.data['top']))
         
         if len(df):
             df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
