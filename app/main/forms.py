@@ -1,25 +1,33 @@
 
-from wtforms import Form, StringField, SelectField
+from wtforms import Form, StringField, SelectField, SelectMultipleField
+from wtforms.widgets import CheckboxInput
+from wtforms.widgets.core import TableWidget
 from ..model import courses
+from ..database import acronyms
+
+'''wtforms method to have a MultiCheckboxField returning an array of selected values (may be empty)'''
+class MultiCheckboxField(SelectMultipleField):
+    widget = TableWidget(with_table_tag=False)
+    option_widget = CheckboxInput()
 
 """Build the search form, including dropdown menus at the top of the page, from the main datafile."""
 class CourseSearchForm(Form):
-    divisions = ([('Any','Any')] + sorted(set([
-        (t['Division'],t['Division']) for (t) in (courses.find({}, {'Division': True}))
-    ])))
+    divisions = [('Any','Any')] + ([
+        (t,t) for t in acronyms.division.values()
+    ])
 
-    departments = ([('Any','Any')] + sorted(set([
-        (t['Department'], t['Department']) for t in (courses.find({}, {'Department': True}))
-    ])))
-    # print(departments)
+    departments = [('Any','Any')] + ([
+       (t,t) for t in acronyms.department.values()
+    ])
 
-    campus = ([('Any','Any')] + sorted(set([
-        (t['Campus'], t['Campus']) for t in (courses.find({}, {'Campus': True}))
-    ])))
 
-    year_choices = sorted(set([
-        (t["Course Level"], t['Course Level']) for t in (courses.find({}, {'Course Level': True}))
-    ]))
+    campus = [('Any','Any')] + ([
+        (t,t) for t in acronyms.campus.values()
+    ])
+
+    year_choices = [
+        (t,t) for t in [0,1,2,3,4,5,6,7]
+    ]
             
     top = [
         ('10','10'),

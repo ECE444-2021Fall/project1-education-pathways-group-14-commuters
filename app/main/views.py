@@ -1,17 +1,22 @@
 from . import main
 from .forms import CourseSearchForm
-from ..model import G, courses
-from flask import render_template, request, redirect
-from .search import filter_courses
+from flask import render_template, request, redirect, session, flash
+from .search import search_url
 import pandas as pd
 
 """Homepage is essentially just the course search form. If a post request is received, call the method that finds search results."""
-@main.route('/',methods=['GET','POST'])
+@main.route('/',methods=['GET'])
 def home():
+    return render_template('index.html')
+
+
+"""Course search form. If a post request is received, call the method that finds search results."""
+@main.route('/find',methods=['GET','POST'])
+def search():
     search = CourseSearchForm(request.form)
     if request.method == 'POST':
         return search_results(search)
-    return render_template('index.html',form=search)
+    return render_template('search.html',form=search)
 
 """Handle the data from the POST request that will go to the main algorithm.
 If we get an empty search, just go back to home.
@@ -21,18 +26,22 @@ Pass the original search to the template as well, so the user can see the contex
 """
 @main.route('/results')
 def search_results(search):
-    if search.data['search'] == '' or not search.data['search']:
-        return redirect('/')
-    results = filter_courses(
-        search.data['search'],
-        search.data['select'],
-        search.data['divisions'],
-        search.data['departments'],
-        search.data['campuses'],
-        search.data['top']
-        )
+    data = search_url(search)
+        
+    df = pd.json_normalize(data['result'])
 
-    return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+    if search != None:
+        df = df.head(int(search.data['top']))
+    
+    if len(df):
+        df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
+        df = df.rename(columns={"course_level":"Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Course Description", "campus":"Campus"})
+        for i in range(len(df)):
+            df["Code"][i] = '<a href="/course/%s" target="_blank"> %s <a>' %(df["Code"][i], df["Code"][i])
+        df = [df]
+    else: df = []
+
+    return render_template('results.html',tables=[t.to_html(classes='data table table-light table-striped table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in df],form=search)
 
 """
 This method shows the information about a single course.
@@ -43,52 +52,40 @@ Pass all that to render template.
 @main.route('/course/<code>')
 def course(code):
 
-    #If the course code is not present in the dataset, progressively remove the last character until we get a match.
-    #For example, if there is no CSC413 then we find the first match that is CSC41.
-    #If there are no matches for any character, just go home.
+    data = search_url(code=code)
 
-    course_code = []
-    
-    for index in courses.find({}, {'Code': True}):
-        course_code.append(index["Code"])
+    df = pd.json_normalize(data['result'])
 
-    course_code = pd.DataFrame(course_code)
-    course_code.columns=['Code']
+    #Since the calls are made for course that do exist in the database this should not happen
+    #However, if user brute force by typing his own link he will be redirect to home directory to not make page crash
+    if len(df) == 0:
+        return redirect('/')
+        
+    course = df
 
-
-    if code not in course_code['Code'].values:
-        while True:
-            code = code[:-1]
-
-            if len(code) == 0:
-                return redirect('/')
-
-            t = course_code[course_code['Code'].str.contains(code)]
-
-            if len(t) > 0:
-                code = t['Code'].values[0]
-                return redirect('/course/' + code)
-
-    course = courses.find({'Code': code}, {'_id': False})[0]
-    # print(courses.find({'Code': code}, {'_id': False})[0])
     #use course network graph to identify pre and post requisites
-    pre = G.in_edges(code)
-    post = G.out_edges(code)
-    excl = course['Exclusion']
-    coreq = course['Corequisite']
-    aiprereq = course['AIPreReqs']
-    majors = course['MajorsOutcomes']
-    minors = course['MinorsOutcomes']
-    faseavailable = course['FASEAvailable']
-    mayberestricted = course['MaybeRestricted']
-    terms = course['Term']
-    activities = course['Activity']
-    course = {k:v for k,v in course.items() if k not in ['Course','Course Level Number','FASEAvailable','MaybeRestricted','URL','Pre-requisites','Exclusion','Corequisite','Recommended Preparation','AIPreReqs','MajorsOutcomes','MinorsOutcomes','Term','Activity'] and v==v}
+    pre = course['prerequisites']
+    #post = G.out_edges(code)
+
+    excl = course['exclusion'][0]
+    coreq = course['corequisite'][0]
+    aiprereq = course['ai_pre_reqs'][0]
+    majors = course['majors_outcomes'][0]
+    minors = course['minors_outcomes'][0]
+    faseavailable = course['fase_available'][0]
+    mayberestricted = course['maybe_restricted'][0]
+    terms = course['term'][0]
+    activities = course['activity'][0]
+
+    course = df[["division", "course_description", "department", "course_level",  "campus", "code", "name"]]
+    course = course.rename(columns={"course_level":"Course Level", "code":"Code", "department":"Department", "name":"Course Name", "division":"Division", "course_description":"Course Description", "campus":"Campus"})
+    course = course.iloc[0]
+
     return render_template(
         'course.html',
         course=course,
         pre=pre, 
-        post=post,
+        #post=post,
         excl=excl,
         coreq=coreq,
         aip=aiprereq,
@@ -100,3 +97,54 @@ def course(code):
         activities=activities,
         zip=zip
         )
+
+@main.route('/login', methods=['GET', 'POST'])
+def login():
+
+    #When submit button is pressed
+    if request.method == 'POST':
+
+        #Verify that username and password match the required values
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            #Flash login error
+            flash('Invalid Credentials. Please try again.',"danger")
+
+        else:
+            #Login sucessful
+            #Set session variable to use for access 
+            session['username'] = request.form['username']
+            #Flash success message
+            flash('You were successfully logged in.',"success")
+
+    return render_template('login.html')
+
+
+"""
+Method to Logout User
+"""
+@main.route('/logout')
+def logout():
+    #If user logs out, delete session username variable
+    session.pop('username', None)
+
+    return render_template('index.html')
+
+
+"""
+Method to View User Timetable
+"""
+@main.route('/plan')
+def planner():
+
+    #If user tries to access planner without logging in
+    #Redirect to Login Page
+    if 'username' not in session or session['username'] is None:
+        flash('Login to view profile.',"warning")
+
+        return redirect('/login')
+
+    #Get session user name
+    user = session['username']
+    
+    #Open Planner page using user 
+    return(render_template('planner.html', user=user))

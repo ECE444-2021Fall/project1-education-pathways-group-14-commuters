@@ -5,6 +5,8 @@ from flask import Flask
 def register_views(app: Flask):
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+    from .database import database as database_blueprint
+    app.register_blueprint(database_blueprint)
 
 def create_app(*config_cls, **db_cls) -> Flask:
     global app
