@@ -1,3 +1,7 @@
 {% macro render_field(field) %}
-    {{ field.label }} {{ field(**kwargs)|safe }}
+<div class="common-page-form-field">
+    <b>{{ field.label }}</b>
+    <br>
+    {{ field(**kwargs)|safe }}
+</div>
 {% endmacro %}

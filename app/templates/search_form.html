@@ -1,0 +1,85 @@
+<!--Search form for Search and Results pages-->
+<form method="post" class="common-page-form" role="form" id="search-form">
+
+    <!--Search Term Input Text Box-->
+    <div class="form-group">
+        <div class="input-group input-group-lg mb-1">
+            {{ form.search(class_="form-control", placeholder="Enter Search Term(s)") }}
+
+            <!--Search Button to Submit Form with Magnifier Icon-->
+            <button type="submit" class="btn btn-secondary" id="button-addon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+            </button>
+        </div>
+
+        <!--Drop Down Element for Search Filters-->
+        <div class="accordion" id="filter-accordion">
+            <div class="accordion-item" id="filter-heading">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#filter-collapse" aria-expanded="true" aria-controls="filter-collapse">
+                        <strong>Apply Search Filters +</strong>
+                    </button>
+                </h2>
+                <div id="filter-collapse" class="accordion-collapse collapse" aria-labelledby="filter-heading"
+                    data-bs-parent="#filter-accordion">
+                    <div class="accordion-body">
+
+                        <!--Checkbox for Course Year Selection-->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" , for="year-select">
+                                {{ form.select.label }}
+                            </span>
+                            <span class="input-group-text">
+                                <div class="form-check form-check-inline">
+                                    {{ form.select(class="form-check-input", type="checkbox", id="year-select",
+                                    input=choices) }}
+                                </div>
+                            </span>
+                        </div>
+
+                        <!--Dropdown Menu for Division-->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" , for="division-select">
+                                {{ form.divisions.label }}
+                            </span>
+                            {{ form.divisions(class_="form-select", id="division-select", placeholder="Any Division",
+                            option=choices) }}
+                        </div>
+
+                        <!--Dropdown Menu for Department-->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" , for="department-select">
+                                {{ form.departments.label }}
+                            </span>
+                            {{ form.departments(class_="form-select", id="department-select", option=choices) }}
+                        </div>
+
+                        <!--Dropdown Menu for Campus-->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" , for="campus-select">
+                                {{ form.campuses.label }}
+                            </span>
+                            {{ form.campuses(class_="form-select", id="campus-select", option=choices) }}
+                        </div>
+
+                        <!--Dropdown Menu for Number of Results-->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" , for="top-select">
+                                {{ form.top.label }}
+                            </span>
+                            {{ form.top(class_="form-select", id="top-select", option=choices) }}
+                            <span class="input-group-text">
+                                Results
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
