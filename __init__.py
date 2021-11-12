@@ -11,7 +11,9 @@ from werkzeug import datastructures
 from wtforms import Form, StringField, SelectField, SelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.widgets.core import Select, TableWidget
+from database import acronyms
 from search import *
+from acronyms import *
 
 class MultiCheckboxField(SelectMultipleField):
     #widget = ListWidget(prefix_label=False)
@@ -22,21 +24,23 @@ from flask_pymongo import PyMongo
 
 """Build the search form, including dropdown menus at the top of the page, from the main datafile."""
 class CourseSearchForm(Form):
-    df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
-    divisions = [('Any','Any')] + sorted([
-        (t,t) for t in set(df.Division.values)
+    #df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
+
+    divisions = [('Any','Any')] + ([
+        (t,t) for t in acronyms.division.values()
     ])
 
-    departments = [('Any','Any')] + sorted([
-        (t,t) for t in set(df.Department.values)
+    departments = [('Any','Any')] + ([
+       (t,t) for t in acronyms.department.values()
     ])
 
-    campus = [('Any','Any')] + sorted([
-        (t,t) for t in set(df.Campus.values)
+
+    campus = [('Any','Any')] + ([
+        (t,t) for t in acronyms.campus.values()
     ])
 
     year_choices = [
-        (t,t) for t in set(df['Course Level'].values)
+        (t,t) for t in [0,1,2,3,4,5,6,7]
     ]
             
     top = [
