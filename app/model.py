@@ -4,6 +4,7 @@ from . import app
 
 mongo = PyMongo(app)
 courses = mongo.db.courses
+users = mongo.db.users
 
 
 import pandas as pd
