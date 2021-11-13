@@ -13,7 +13,7 @@ def newUser(username, name, email, studentNumber, campus, division, department, 
     - `campus`: user's campus. (e.g. UTSG, UTM, UTSC)
     - `division`: user's division. (e.g. APSC)
     - `department`: user's department (e.g. ECE)
-    - `year`: user's current year of study. Expecting a string.
+    - `year`: user's current year of study. Expecting an integer.
     - `status`: user's status, full-time or part-time. (e.g. FT, PT)
     - `startYear`: user's starting year. Expecting an integer.
     - `gradYear`: user's expected graduation year. Expecting an integer.
