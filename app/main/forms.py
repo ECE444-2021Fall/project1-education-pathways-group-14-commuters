@@ -34,8 +34,8 @@ class CourseSearchForm(Form):
         ('25','25'),
         ('50','50')
     ]
-    select = SelectField('Course Year:', choices=year_choices)
-    top = SelectField('',choices=top)
+    select = MultiCheckboxField('Course Year:', choices=year_choices)
+    top = SelectField('Show Top',choices=top)
     divisions = SelectField('Division:', choices=divisions)
     departments = SelectField('Department:', choices=departments)
     campuses = SelectField('Campus:', choices=campus)
