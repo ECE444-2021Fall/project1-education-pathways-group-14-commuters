@@ -1,11 +1,10 @@
 from flask import jsonify, request
-from flask import Blueprint
-from db import courses
-from acronyms import *
+from ..model import courses
+from . import acronyms
+from . import database
 
-courses_bp = Blueprint('courses_dp', __name__)
 
-@courses_bp.route('/api/course/search', methods=['GET'])
+@database.route('/api/course/search', methods=['GET'])
 def get_courses_with_params():
     # We will implement our search and filters in such way: AND(OR(), OR()...)
     # E.g. to search for a Computer Science or Engineering course that has the keyword "software" in the course name or code:
@@ -47,7 +46,10 @@ def get_courses_with_params():
                 'arts_and_science_distribution': s['Arts and Science Distribution'],
                 'fase_available': s['FASEAvailable'],
                 'maybe_restricted': s['MaybeRestricted'],
-                'majors_outcomes': s['MajorsOutcomes']
+                'majors_outcomes': s['MajorsOutcomes'],
+                'minors_outcomes': s['MinorsOutcomes'],
+                'ai_pre_reqs': s['AIPreReqs'],
+                'activity': s['Activity']
             })
         except KeyError: # when key does not exist in s
             return jsonify({'result' : []}), 500
@@ -61,21 +63,21 @@ def map_query_params(args):
 def get_original_value(key, value):
     try:
         if key == 'Campus':
-            return campus[value.lower()]
+            return acronyms.campus[value.lower()]
         elif key == 'Division':
-            return division[value.lower()]
+            return acronyms.division[value.lower()]
         elif key == 'Department':
-            return department[value.lower()]
+            return acronyms.department[value.lower()]
         elif key == 'UTSC Breadth':
-            return utsc_breadth[value.lower()]
+            return acronyms.utsc_breadth[value.lower()]
         elif key == 'APSC Electives':
-            return apsc_electives[value.lower()]
+            return acronyms.apsc_electives[value.lower()]
         elif key == 'UTM Distribution':
-            return utm_distribution[value.lower()]
+            return acronyms.utm_distribution[value.lower()]
         elif key == 'Arts and Science Breadth':
-            return arts_and_science_breadth[value.lower()]
+            return acronyms.arts_and_science_breadth[value.lower()]
         elif key == 'Arts and Science Distribution':
-            return arts_and_science_distribution[value.lower()]
+            return acronyms.arts_and_science_distribution[value.lower()]
     except KeyError:
         return value
     return value
