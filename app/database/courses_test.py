@@ -1,4 +1,3 @@
-import pytest
 import unittest
 from courses import *
 from werkzeug.datastructures import ImmutableMultiDict
