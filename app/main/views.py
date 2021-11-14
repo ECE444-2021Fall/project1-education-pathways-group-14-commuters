@@ -136,7 +136,7 @@ Method to Logout User
 def logout():
     #If user logs out, delete session username variable
     session.pop('username', None)
-
+    session.pop('df', None)
     return render_template('index.html')
 
 
