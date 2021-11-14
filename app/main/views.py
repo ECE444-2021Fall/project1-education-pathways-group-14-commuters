@@ -37,7 +37,7 @@ def search_results(search):
         df = df[["course_level", "code", "department", "name", "division", "course_description", "campus"]]
         df = df.rename(columns={"course_level":"Level", "code":"Code", "department":"Departement", "name":"Course Name", "division":"Division", "course_description":"Course Description", "campus":"Campus"})
         for i in range(len(df)):
-            df["Code"][i] = '<a href="/course/%s" target="_blank"> %s <a>' %(df["Code"][i], df["Code"][i])
+            df.loc[[i],["Code"]] = '<a href="/course/%s" target="_blank"> %s <a>' %(df["Code"][i], df["Code"][i])
         df = [df]
     else: df = []
 
@@ -98,6 +98,11 @@ def course(code):
         zip=zip
         )
 
+"""
+This method handles the login for the app.
+It verifies credentials entered in the form page and
+sets a session variable for use in the application.
+"""
 @main.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -120,7 +125,8 @@ def login():
 
 
 """
-Method to Logout User
+Method to Logout User. 
+Removes session variable signifying usser login.
 """
 @main.route('/logout')
 def logout():
@@ -131,7 +137,9 @@ def logout():
 
 
 """
-Method to View User Timetable
+Method to View User Timetable.
+Only allows access if session login variable indicates 
+that the user login was successful.
 """
 @main.route('/plan')
 def planner():
