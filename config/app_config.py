@@ -37,6 +37,7 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
         'sqlite://'
+    MONGO_URI = "mongodb+srv://admin:admin@cluster0.gtfd0.mongodb.net/courses"
     WTF_CSRF_ENABLED = False
 
 
