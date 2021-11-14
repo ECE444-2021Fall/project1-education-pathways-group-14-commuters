@@ -1,3 +1,5 @@
+import numpy as np
+from numpy import nan
 from . import main
 from .forms import CourseSearchForm, EditPlanForm
 from flask import render_template, request, redirect, session, flash, url_for
@@ -114,8 +116,15 @@ def login():
             #Login sucessful
             #Set session variable to use for access 
             session['username'] = request.form['username']
+
+            #return user to the page he wanted to access while logged out
+            if "login" in session and session['login'] == 'plan':
+                session.pop('login', None)
+                return redirect('/plan')
+
             #Flash success message
             flash('You were successfully logged in.',"success")
+
 
     return render_template('login.html')
 
@@ -139,15 +148,13 @@ def planner():
 
     dict_obj = session.get('df', None)
     df = pd.DataFrame.from_dict(dict_obj)
-    session.pop('df', None)
-
-    print("BACK TO PLAN", df)
 
     #If user tries to access planner without logging in
     #Redirect to Login Page
     if 'username' not in session or session['username'] is None:
         flash('Login to view profile.',"warning")
 
+        session['login'] = 'plan'
         return redirect('/login')
 
     #Get session user name
@@ -157,10 +164,13 @@ def planner():
     if df.empty:
         dict_plan = getPlan(user)
 
+        #all cells of a dataframe need to be filled since dictionary does not necessarly have this format initially
         df = pd.DataFrame.from_dict(dict([ (k,pd.Series(v)) for k,v in dict_plan.items()]))
+        df = df.fillna('')
 
     if request.method == 'POST':
         if request.form.get('Add') == 'Add':
+            session.pop('df', None)
             dict_obj = df.to_dict()
             session['df'] = dict_obj
             return redirect('/plan/edit')
@@ -195,12 +205,15 @@ def edit():
 def temp_plan(df, edit):
     session.pop('df', None)
 
-    print(df)
-
     year_sem = edit.data['year'] + edit.data['sem']
-    df = df.append({year_sem:edit.data['code']}, ignore_index=True)
 
-    print(df['2020F'])
+    #if column is not filled insert in previous element of columns
+    if len(df[year_sem][len(df.index)-1]) == 0:
+        for i in range(len(df.index)):
+            if len(df[year_sem][i]) == 0:
+                df[year_sem][i] = edit.data['code']
+                break
+    else : df = df.append({year_sem:edit.data['code']}, ignore_index=True)
 
     dict_obj = df.to_dict()
     session['df'] = dict_obj

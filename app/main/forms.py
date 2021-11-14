@@ -4,6 +4,7 @@ from wtforms.widgets import CheckboxInput
 from wtforms.widgets.core import TableWidget
 from ..model import courses
 from ..database import acronyms
+from ..database.course_choices import course_choices
 
 """wtforms method to have a MultiCheckboxField returning an array of selected values (may be empty)"""
 class MultiCheckboxField(SelectMultipleField):
@@ -44,7 +45,7 @@ class CourseSearchForm(Form):
 """Build the edit plan form"""
 class EditPlanForm(Form):
 
-    course_choices = {'ECE444H1': 'ECE444 - Software Engineering', 'ECE344H1': 'ECE344 - Operating Systems', 'ECE342H1': 'ECE342 - Computer Hardware'}
+    #course_choices from course_choices.py in database folder
 
     year_choices = [
         (t,t) for t in [2020,2021,2022,2023,2024,2025,2026,2027]
