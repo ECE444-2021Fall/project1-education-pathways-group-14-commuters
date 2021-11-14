@@ -1,9 +1,23 @@
 {% extends "base_template.html" %}
 
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/planner.css') }}">
+{% endblock %}
+
 {% block title %}
 <title>Education Pathways</title>
 {% endblock %}
 
 {% block page %}
 <p>Hello {{user}}</p>
+<div id="results-page-table-container">
+    {% if tables %}
+    {% for table in tables %}
+    {{ table|safe }}
+    {% endfor %}
+    {% else %}
+    <h4>No Matching Results.</h4>
+    {% endif %}
+</div>
+
 {% endblock %}

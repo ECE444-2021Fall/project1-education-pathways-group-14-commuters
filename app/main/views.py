@@ -147,4 +147,12 @@ def planner():
     user = session['username']
     
     #Open Planner page using user 
-    return(render_template('planner.html', user=user))
+    #return(render_template('planner.html', user=user))
+
+    #testing --------------
+    test_data=[["2017F","2017S","2018F","2018S"],["ECE444","ECE454","",""]]
+    test_df = pd.DataFrame(test_data, columns=["2017F","2017W","2018F","2018W"])
+    print(test_df)
+    test_df=[test_df]
+    print(test_df)
+    return(render_template('planner.html',tables=[t.to_html(classes='data table table-light table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in test_df], user=user))
