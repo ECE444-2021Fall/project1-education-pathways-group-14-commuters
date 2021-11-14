@@ -10,12 +10,10 @@ def get_courses_with_params():
     # E.g. to search for a Computer Science or Engineering course that has the keyword "software" in the course name or code:
     #       AND(OR(keyword=software), OR(department=csc, department=ece))
     # 
-    # Right now you have to call the exact column name in the database because I haven't implemented acroynms like ece yet
-    # TODO: implement acroynms
-    # http://127.0.0.1:5000/api/course/search?keyword=software&Department=Computer+Science&Department=Edward%20S.%20Rogers%20Sr.%20Dept.%20of%20Electrical%20%26%20Computer%20Engin.
+    # http://127.0.0.1:5000/api/course/search?keyword=software&Department=CSC&Department=ECE
     # Query parameters:
     #   keyword: software
-    #   Department: Computer+Science, Edward%20S.%20Rogers%20Sr.%20Dept.%20of%20Electrical%20%26%20Computer%20Engin.
+    #   Department: CSC, ECE
     # Note 1: keyword searches for both Name and Code
     # Note 2: use url encoder (https://www.urlencoder.org/) to encode values with space or symbols
 

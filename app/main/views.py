@@ -1,5 +1,5 @@
 from . import main
-from .forms import CourseSearchForm
+from .forms import CourseSearchForm, EditPlanForm
 from flask import render_template, request, redirect, session, flash
 from .search import search_url
 import pandas as pd
@@ -156,3 +156,19 @@ def planner():
     test_df=[test_df]
     print(test_df)
     return(render_template('planner.html',tables=[t.to_html(classes='data table table-light table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in test_df], user=user))
+
+"""
+Method to edit user plan
+"""
+@main.route('/plan/edit', methods=['GET', 'POST'])
+def edit(code=None):
+    #If user tries to access planner without logging in
+    #Redirect to Login Page
+    if 'username' not in session or session['username'] is None:
+        flash('Login to view profile.',"warning")
+
+        return redirect('/login')
+
+    edit = EditPlanForm(request.form)
+
+    return(render_template('edit.html', form=edit))
