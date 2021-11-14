@@ -1,8 +1,9 @@
 from . import main
 from .forms import CourseSearchForm, EditPlanForm
-from flask import render_template, request, redirect, session, flash
+from flask import render_template, request, redirect, session, flash, url_for
 from .search import search_url
 import pandas as pd
+from app.database.users import *
 
 """Homepage is essentially just the course search form. If a post request is received, call the method that finds search results."""
 @main.route('/',methods=['GET'])
@@ -133,8 +134,14 @@ def logout():
 """
 Method to View User Timetable
 """
-@main.route('/plan')
+@main.route('/plan', methods=['GET', 'POST'])
 def planner():
+
+    dict_obj = session.get('df', None)
+    df = pd.DataFrame.from_dict(dict_obj)
+    session.pop('df', None)
+
+    print("BACK TO PLAN", df)
 
     #If user tries to access planner without logging in
     #Redirect to Login Page
@@ -147,21 +154,29 @@ def planner():
     user = session['username']
     
     #Open Planner page using user 
-    #return(render_template('planner.html', user=user))
+    if df.empty:
+        dict_plan = getPlan(user)
 
-    #testing --------------
-    test_data=[["2017F","2017S","2018F","2018S"],["ECE444","ECE454","",""]]
-    test_df = pd.DataFrame(test_data, columns=["2017F","2017W","2018F","2018W"])
-    print(test_df)
-    test_df=[test_df]
-    print(test_df)
-    return(render_template('planner.html',tables=[t.to_html(classes='data table table-light table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in test_df], user=user))
+        df = pd.DataFrame.from_dict(dict([ (k,pd.Series(v)) for k,v in dict_plan.items()]))
+
+    if request.method == 'POST':
+        if request.form.get('Add') == 'Add':
+            dict_obj = df.to_dict()
+            session['df'] = dict_obj
+            return redirect('/plan/edit')
+
+    df = [df]
+
+    return(render_template('planner.html',tables=[t.to_html(classes='data table table-light table-hover table-bordered',index=False,na_rep='',render_links=True, escape=False) for t in df], user=user))
 
 """
 Method to edit user plan
 """
 @main.route('/plan/edit', methods=['GET', 'POST'])
-def edit(code=None):
+def edit():
+    dict_obj = session.get('df', None)
+    df = pd.DataFrame.from_dict(dict_obj)
+
     #If user tries to access planner without logging in
     #Redirect to Login Page
     if 'username' not in session or session['username'] is None:
@@ -171,4 +186,23 @@ def edit(code=None):
 
     edit = EditPlanForm(request.form)
 
+    if request.method == 'POST':
+        return temp_plan(df, edit)
+            
+
     return(render_template('edit.html', form=edit))
+
+def temp_plan(df, edit):
+    session.pop('df', None)
+
+    print(df)
+
+    year_sem = edit.data['year'] + edit.data['sem']
+    df = df.append({year_sem:edit.data['code']}, ignore_index=True)
+
+    print(df['2020F'])
+
+    dict_obj = df.to_dict()
+    session['df'] = dict_obj
+
+    return redirect('/plan')
