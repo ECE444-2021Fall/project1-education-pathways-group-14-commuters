@@ -169,11 +169,10 @@ def planner():
         df = df.fillna('')
 
     if request.method == 'POST':
-        if request.form.get('Add') == 'Add':
-            session.pop('df', None)
-            dict_obj = df.to_dict()
-            session['df'] = dict_obj
-            return redirect('/plan/edit')
+        session.pop('df', None)
+        dict_obj = df.to_dict()
+        session['df'] = dict_obj
+        return redirect('/plan/edit')
 
     df = [df]
 
@@ -215,6 +214,7 @@ def temp_plan(df, edit):
                 break
     else : df = df.append({year_sem:edit.data['code']}, ignore_index=True)
 
+    df = df.fillna('')
     dict_obj = df.to_dict()
     session['df'] = dict_obj
 

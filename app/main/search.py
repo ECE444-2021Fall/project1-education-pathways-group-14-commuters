@@ -59,9 +59,7 @@ def search_url(search=None, code=None):
             many_filter = True
     elif code != None:
         url += "Code=" + str(code)
-
-    print(url)
-  
+        
     '''From the json and urllib libraries'''
     # store the response of URL
     response = urlopen(url)
