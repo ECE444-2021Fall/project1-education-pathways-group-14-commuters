@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import nan
+from pandas.core.frame import DataFrame
 from . import main
 from .forms import CourseSearchForm, EditPlanForm
 from flask import render_template, request, redirect, session, flash, url_for
@@ -164,9 +165,10 @@ def planner():
     if df.empty:
         dict_plan = getPlan(user)
 
-        #all cells of a dataframe need to be filled since dictionary does not necessarly have this format initially
-        df = pd.DataFrame.from_dict(dict([ (k,pd.Series(v)) for k,v in dict_plan.items()]))
-        df = df.fillna('')
+        if dict_plan is not None:
+            #all cells of a dataframe need to be filled since dictionary does not necessarly have this format initially
+            df = pd.DataFrame.from_dict(dict([ (k,pd.Series(v)) for k,v in dict_plan.items()]))
+            df = df.fillna('')
 
     if request.method == 'POST':
         session.pop('df', None)
