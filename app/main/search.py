@@ -27,6 +27,9 @@ def search_url(search=None, code=None):
         department = search.data['departments']
         campus = search.data['campuses']
 
+        tags = tags.replace(" ", "%20")
+        print(tags)
+
         if(len(tags) > 0):
             terms = [t for t in tags.split(',')]
 
