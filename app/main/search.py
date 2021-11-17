@@ -12,7 +12,7 @@ The return value is JSON file containing the results of the API call
 def search_url(search=None, code=None):
 
     #The API call is done by this url
-    url = "http://127.0.0.1:5000/api/course/search?"
+    url = "https://planning-and-exploration.herokuapp.com/api/course/search?"
     many_filter = False
 
     #Between each different tags it is required to have an "&"
