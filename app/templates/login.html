@@ -1,3 +1,4 @@
+<!--Template for login form-->
 {% extends "base_template.html" %}
 
 {% block stylesheets %}
@@ -10,6 +11,7 @@
 
 {% block page %}
 
+<!--Flash messages to indicate errors, warnings and success to the users-->
 <div class="flash-msg">
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -40,6 +42,8 @@
 </div>
 
 <div class="login-elements">
+
+  <!--Login form containing username and password fields-->
   <form action="/login" method="post">
     <div class="mb-3">
       <label for="usernameInput" class="form-label"><b>Username</b></label>

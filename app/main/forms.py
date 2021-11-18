@@ -4,8 +4,9 @@ from wtforms.widgets import CheckboxInput
 from wtforms.widgets.core import TableWidget
 from ..model import courses
 from ..database import acronyms
+from ..database.course_choices import course_choices
 
-'''wtforms method to have a MultiCheckboxField returning an array of selected values (may be empty)'''
+"""wtforms method to have a MultiCheckboxField returning an array of selected values (may be empty)"""
 class MultiCheckboxField(SelectMultipleField):
     widget = TableWidget(with_table_tag=False)
     option_widget = CheckboxInput()
@@ -40,3 +41,27 @@ class CourseSearchForm(Form):
     departments = SelectField('Department:', choices=departments)
     campuses = SelectField('Campus:', choices=campus)
     search = StringField('Search Terms:')
+
+"""Build the edit plan form"""
+class EditPlanForm(Form):
+
+    #course_choices from course_choices.py in database folder
+
+    year_choices = [
+        (t,t) for t in [2020,2021,2022,2023,2024,2025,2026,2027]
+    ]
+
+    sem_choices = {'F':'Fall','W':'Winter','S':'Summer'}
+
+    status_choices = [
+        (t,t) for t in ['Taken','Taking','Will Take']
+    ]
+
+    code = SelectField("Enter a Course Code/Name", choices=[("", "")] + [(uuid, name) for uuid, name in course_choices.items()])
+
+    year = SelectField('Course Year:', choices=year_choices)
+
+    sem = SelectField('Semester:', choices=sem_choices)
+
+    status = SelectField('Status', choices=status_choices)
+

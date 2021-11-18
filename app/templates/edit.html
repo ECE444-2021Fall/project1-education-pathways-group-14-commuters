@@ -1,0 +1,77 @@
+<!--Form to add courses to planner page-->
+
+<!DOCTYPE html>
+
+{% extends "base_template.html" %}
+
+{% block page %}
+
+<!-- Source for the autocomplete form (method between comments "Autocomplete" Select2 JQuery library https://select2.org/ -->
+<!-- https://stackoverflow.com/questions/58354678/wtforms-textfield-searchfield-with-autocompletion-for-flask-app-similar-to-a-go -->
+<!-- AutoComplete -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<body>
+    <form method="post" class="common-page-form" role="form" id="search-form">
+        <div class="form-group">
+            
+            <!--Course suggesting dropdown for adding courses-->
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="course-select">
+                    {{ form.code.label }}
+                </label>
+                {{ form.code(class_="form-control", placeholder="Select Course", id="course-select")}}
+            </div>
+
+            <!--Year Selection Dropdown-->
+            <div class="input-group mb-3">
+                <span class="input-group-text" , for="year-select">
+                    {{ form.year.label }}
+                </span>
+                {{ form.year(class_="form-select", id="year-select", placeholder="Select Year",
+                option=choices) }}
+            </div>
+
+            <!--Semester selection dropdown-->
+            <div class="input-group mb-3">
+                <span class="input-group-text" , for="semester-select">
+                    {{ form.sem.label }}
+                </span>
+                {{ form.sem(class_="form-select", id="semester-select",
+                option=choices) }}
+            </div>
+
+            <!--Course Status Taken, Taking, Will take selection-->
+            <div class="input-group mb-3">
+                <span class="input-group-text" , for="status-select">
+                    {{ form.status.label }}
+                </span>
+                {{ form.status(class_="form-select", id="status-select",
+                option=choices) }}
+            </div>
+
+            <!--Submit button to add courses-->
+            <div>
+            <button type="submit" class="btn btn-secondary" id="button-addon">
+                Add
+            </button>
+            </div>
+        </div>
+    </form>
+
+<script>
+$(document).ready(function() {
+    $('#code').select2({  // init Select2 on form's name field
+        placeholder: "{{ form.code.label.text }}",
+        allowClear: true,
+        "width": "1000px"
+    });
+});
+</script>
+<!-- AutoComplete End -->
+
+{% endblock %}
