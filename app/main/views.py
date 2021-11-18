@@ -164,7 +164,9 @@ def planner():
 
         if dict_plan is not None:
             #all cells of a dataframe need to be filled since dictionary does not necessarly have this format initially
-            df = pd.DataFrame.from_dict(dict([ (k,pd.Series(v)) for k,v in dict_plan.items()]))
+            x = dict([ (k,pd.Series(v)) for k,v in dict_plan.items()])
+            df = pd.DataFrame.from_dict(x, orient="columns")
+            df.columns = x.keys()
             df = df.fillna('')
 
     if request.method == 'POST':
