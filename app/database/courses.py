@@ -55,7 +55,7 @@ def get_courses_with_params():
 
 # map the query parameters by keys
 def map_query_params(args):
-    print(dict(args))
+    # print(dict(args))
     return dict(args.lists())
 
 def get_original_value(key, value):

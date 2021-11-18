@@ -2,4 +2,4 @@ from flask import Blueprint
 
 database = Blueprint('courses_dp', __name__)
 
-from . import courses
+from . import courses, users

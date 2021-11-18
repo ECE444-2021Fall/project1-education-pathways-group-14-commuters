@@ -2,7 +2,6 @@
 from wtforms import Form, StringField, SelectField, SelectMultipleField
 from wtforms.widgets import CheckboxInput
 from wtforms.widgets.core import TableWidget
-from ..model import courses
 from ..database import acronyms
 from ..database.course_choices import course_choices
 

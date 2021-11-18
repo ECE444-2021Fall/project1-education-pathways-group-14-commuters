@@ -34,3 +34,66 @@ docker run -d -p 5000:5000 python-docker
 
 ## 🎖 Acknowledgements
 This project is built upon https://github.com/nelaturuk/education_pathways, a tool published by the Centre for Analytics and Artificial Intelligence Engineering (CARTE) at the University of Toronto. 
+
+## :file_folder: Folder Structure
+```
+project1-education-pathway-group-14-commuters
+│   .flaskenv
+|   .gitignore
+│   CONTRIBUTION.md
+│   Dockerfile
+|   Procfile
+│   README.md
+│   environment.yml
+│   requirements.txt
+│   run.py   
+│
+└───app
+│   │   __init__.py
+│   │   model.py
+│   │
+│   └───database
+│       │   __init__.py
+│       │   acronyms.py
+│       │   acronyms_reverse.py
+│       │   course_choices.py
+│       │   courses.py
+│       │   users.py
+│       └───
+│   └───main
+│       │   __init__.py
+│       │   forms.py
+│       │   search.py
+│       │   views.py
+│       └───
+│   └───static
+│       │   base_template.html
+│       │   course.html
+│       │   edit.html
+│       │   index.html
+│       │   login.html
+│       │   ...
+│       └───
+│   └───templates
+│       │   __init__.py
+│       │   forms.py
+│       │   search.py
+│       │   views.py
+│       └───
+└───config
+│   │   __init__.py
+│   │   app_config.py
+│   │   db_config.py
+│   └───
+└───constants
+│   │   __init__.py
+│   │   local_run.py
+│   └───
+└───test
+│   │   __init__.py
+│   │   test_client
+│   │   test_basic
+│   │   ...
+│   └───
+└───
+```
