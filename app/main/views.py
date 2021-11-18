@@ -1,6 +1,3 @@
-import numpy as np
-from numpy import nan
-from pandas.core.frame import DataFrame
 from . import main
 from .forms import CourseSearchForm, EditPlanForm
 from flask import render_template, request, redirect, session, flash, url_for
