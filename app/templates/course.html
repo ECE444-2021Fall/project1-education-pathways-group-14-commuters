@@ -1,3 +1,4 @@
+<!--Template for courses page-->
 {% extends "base_template.html" %}
 
 {% block stylesheets %}
@@ -19,6 +20,8 @@
     <h3>{{course['Code']}}</h3>
     <h3>{{course['Course Name']}}</h3>
 
+    <!--Badges to denote if available for engineering students-->
+    <!--Provides information upon hover-->
     <div class="course-labels">
         {% if mayberestricted %}
         <h5>
@@ -39,6 +42,7 @@
 
     <br>
 
+    <!--For loop to iterate over all course item fields-->
     {% for k,v in course.items() %}
     {% if k != 'Course Name' and k != 'Code' %}
     <h4>{{k}}</h4>
@@ -63,7 +67,10 @@
     {% endif %}
     {% endfor %}
 
+    <!--Table for activities and session terms-->
     {% for t,a in zip(terms,activities) %}
+
+    <!--Only include table if activities field exists-->
     {% if a == a %}
     <h4>{{t}} Schedule</h4>
     <div id="activities-schedule-table-container">
@@ -74,6 +81,8 @@
     {%endfor%}
 
     <br>
+
+    <!--Course Prerequisite Matrix with Exclusions, Majors and Minors-->
     <table class="tg table table-bordered">
         <tbody>
             <tr>
