@@ -1,6 +1,11 @@
-import pytest
 import unittest
-from courses import *
+from app import create_app
+from config.app_config import TestingConfig
+from config.db_config import TestDBConfig
+
+create_app(TestingConfig, TestDBConfig)
+
+from app.database.courses import *
 from werkzeug.datastructures import ImmutableMultiDict
 
 class Test_Map_Query_Params(unittest.TestCase):

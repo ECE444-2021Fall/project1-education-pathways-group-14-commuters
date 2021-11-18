@@ -1,6 +1,13 @@
 # Unit tests
 # Author: Shreya Rajendran
-from __init__ import app
+import unittest
+from app import create_app
+from config.app_config import TestingConfig
+from config.db_config import TestDBConfig
+
+create_app(TestingConfig, TestDBConfig)
+
+from app import *
 
 def test_index():
     """

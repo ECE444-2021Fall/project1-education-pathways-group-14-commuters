@@ -12,7 +12,7 @@ The return value is JSON file containing the results of the API call
 def search_url(search=None, code=None):
 
     #The API call is done by this url
-    url = "http://127.0.0.1:5000/api/course/search?"
+    url = "https://planning-and-exploration.herokuapp.com/api/course/search?"
     many_filter = False
 
     #Between each different tags it is required to have an "&"
@@ -26,6 +26,9 @@ def search_url(search=None, code=None):
         division = search.data['divisions']
         department = search.data['departments']
         campus = search.data['campuses']
+
+        tags = tags.replace(" ", "%20")
+        print(tags)
 
         if(len(tags) > 0):
             terms = [t for t in tags.split(',')]
@@ -59,9 +62,7 @@ def search_url(search=None, code=None):
             many_filter = True
     elif code != None:
         url += "Code=" + str(code)
-
-    print(url)
-  
+        
     '''From the json and urllib libraries'''
     # store the response of URL
     response = urlopen(url)
