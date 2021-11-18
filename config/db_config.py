@@ -1,4 +1,4 @@
-# expecting data config
+import os
 
 class LocalDBConfig:
     MONGO_URI = os.environ.get('DATABASE_URL') or \
