@@ -1,3 +1,7 @@
+<!--Form to add courses to planner page-->
+
+<!DOCTYPE html>
+
 {% extends "base_template.html" %}
 
 {% block page %}
@@ -14,38 +18,43 @@
 <body>
     <form method="post" class="common-page-form" role="form" id="search-form">
         <div class="form-group">
+            
+            <!--Course suggesting dropdown for adding courses-->
             <div class="input-group mb-3">
-                <span class="input-group-text" , for="division-select">
+                <label class="input-group-text" for="course-select">
                     {{ form.code.label }}
-                </span>
-            {{ form.code(class_="form-control", placeholder="Select Course")}}
+                </label>
+                {{ form.code(class_="form-control", placeholder="Select Course", id="course-select")}}
             </div>
-        
 
+            <!--Year Selection Dropdown-->
             <div class="input-group mb-3">
-                <span class="input-group-text" , for="division-select">
+                <span class="input-group-text" , for="year-select">
                     {{ form.year.label }}
                 </span>
-                {{ form.year(class_="form-select", id="division-select", placeholder="Select Year",
+                {{ form.year(class_="form-select", id="year-select", placeholder="Select Year",
                 option=choices) }}
             </div>
 
+            <!--Semester selection dropdown-->
             <div class="input-group mb-3">
-                <span class="input-group-text" , for="division-select">
+                <span class="input-group-text" , for="semester-select">
                     {{ form.sem.label }}
                 </span>
-                {{ form.sem(class_="form-select", id="division-select",
+                {{ form.sem(class_="form-select", id="semester-select",
                 option=choices) }}
             </div>
 
+            <!--Course Status Taken, Taking, Will take selection-->
             <div class="input-group mb-3">
-                <span class="input-group-text" , for="division-select">
+                <span class="input-group-text" , for="status-select">
                     {{ form.status.label }}
                 </span>
-                {{ form.status(class_="form-select", id="division-select",
+                {{ form.status(class_="form-select", id="status-select",
                 option=choices) }}
             </div>
 
+            <!--Submit button to add courses-->
             <div>
             <button type="submit" class="btn btn-secondary" id="button-addon">
                 Add

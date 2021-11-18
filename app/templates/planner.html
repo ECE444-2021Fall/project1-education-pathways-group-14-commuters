@@ -1,3 +1,5 @@
+
+<!--Table of user courses Planner-->
 {% extends "base_template.html" %}
 
 {% block stylesheets %}
@@ -9,12 +11,14 @@
 {% endblock %}
 
 {% block page %}
-<h3>Hello {{user}}</h3>
-
+<h3>Hello {{user}}!</h3>
+<br>
+<!--Add Courses Button-->
 <form method="post">
     <button type="submit" class="btn btn-secondary" id="button-addon"> Add Courses </button>
 </form>
-
+<br>
+<!--Table of selected courses-->
 <div id="results-page-table-container">
     {% if tables %}
     {% for table in tables %}

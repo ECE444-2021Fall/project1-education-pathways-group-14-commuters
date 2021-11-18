@@ -1,3 +1,4 @@
+<!--Template for search results-->
 {% extends "base_template.html" %}
 
 {% block stylesheets %}
@@ -9,12 +10,16 @@
 {% endblock %}
 
 {% block page %}
+
+<!--Search form div-->
 <div id="search-section">
     {% include 'search_form.html' %}
 </div>
 <br>
 <hr>
 <br>
+
+<!--Search Results Tab-->
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="#">
@@ -22,6 +27,8 @@
         </a>
     </li>
 </ul>
+
+<!--Table of search results-->
 <div id="results-page-table-container">
     {% if tables %}
     {% for table in tables %}
